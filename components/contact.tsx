@@ -15,12 +15,35 @@ export function Contact() {
     email: "",
     message: "",
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission here
-    const mailtoLink = `mailto:kyelldimatatac2@gmail.com?subject=Portfolio Contact from ${formData.name}&body=${formData.message}`
-    window.location.href = mailtoLink
+    setIsSubmitting(true)
+    setSubmitStatus('idle')
+
+    try {
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      if (response.ok) {
+        setSubmitStatus('success')
+        setFormData({ name: "", email: "", message: "" })
+      } else {
+        setSubmitStatus('error')
+      }
+    } catch (error) {
+      console.error('Error sending email:', error)
+      setSubmitStatus('error')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -155,12 +178,30 @@ export function Contact() {
                     className="text-lg resize-none"
                   />
                 </div>
+                
+                {submitStatus === 'success' && (
+                  <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+                    <p className="text-green-800 text-sm font-medium">
+                      ✅ Message sent successfully! I'll get back to you soon.
+                    </p>
+                  </div>
+                )}
+                
+                {submitStatus === 'error' && (
+                  <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+                    <p className="text-red-800 text-sm font-medium">
+                      ❌ Failed to send message. Please try again or contact me directly.
+                    </p>
+                  </div>
+                )}
+                
                 <Button
                   type="submit"
-                  className="w-full h-12 text-lg font-semibold hover:scale-[1.02] transition-all duration-300"
+                  disabled={isSubmitting}
+                  className="w-full h-12 text-lg font-semibold hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <Send className="mr-2 h-5 w-5" />
-                  Send Message
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
                 </Button>
               </form>
             </CardContent>
