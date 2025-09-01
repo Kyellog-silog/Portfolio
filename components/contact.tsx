@@ -91,20 +91,6 @@ export function Contact() {
                 </div>
               </div>
 
-              <div className="flex items-center space-x-4 group">
-                <div className="bg-primary/10 p-4 rounded-xl group-hover:bg-primary/20 transition-colors">
-                  <Phone className="h-6 w-6 text-primary" />
-                </div>
-                <div>
-                  <p className="font-semibold text-foreground text-lg">Phone</p>
-                  <a
-                    href="tel:+639217971274"
-                    className="text-muted-foreground hover:text-primary transition-colors text-lg"
-                  >
-                    +63 921 797 1274
-                  </a>
-                </div>
-              </div>
 
               <div className="flex items-center space-x-4 group">
                 <div className="bg-primary/10 p-4 rounded-xl group-hover:bg-primary/20 transition-colors">
@@ -112,7 +98,7 @@ export function Contact() {
                 </div>
                 <div>
                   <p className="font-semibold text-foreground text-lg">Location</p>
-                  <p className="text-muted-foreground text-lg">Nagcarlan, Laguna, Philippines</p>
+                  <p className="text-muted-foreground text-lg">Laguna, Philippines</p>
                 </div>
               </div>
             </div>
