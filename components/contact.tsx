@@ -129,7 +129,7 @@ export function Contact() {
                   <Github className="h-6 w-6 text-primary group-hover:text-primary-foreground" />
                 </a>
                 <a
-                  href="www.linkedin.com/in/kyell-dimatatac-58882517a"
+                  href="https://www.linkedin.com/in/kyell-dimatatac-58882517a"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bg-primary/10 p-3 rounded-xl hover:bg-primary hover:text-primary-foreground transition-all duration-300 group"

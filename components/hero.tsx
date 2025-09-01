@@ -126,7 +126,7 @@ export function Hero() {
             <Github className="h-8 w-8 lg:h-10 lg:w-10 group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-300" />
           </a>
           <a
-            href="www.linkedin.com/in/kyell-dimatatac-58882517a"
+            href="https://www.linkedin.com/in/kyell-dimatatac-58882517a"
             target="_blank"
             rel="noopener noreferrer"
             className="group text-muted-foreground hover:text-primary transition-all duration-300"

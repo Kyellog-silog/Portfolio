@@ -143,7 +143,7 @@ Modify the color scheme in `tailwind.config.js` and CSS custom properties in `ap
 ## 📧 Contact
 
 - **Email**: your.email@example.com
-- **LinkedIn**: www.linkedin.com/in/kyell-dimatatac-58882517a
+- **LinkedIn**: [Kyell Dimatatac](https://www.linkedin.com/in/kyell-dimatatac-58882517a)
 - **GitHub**: [Kyellog-silog](https://github.com/Kyellog-silog)
 
 ## 📄 License
