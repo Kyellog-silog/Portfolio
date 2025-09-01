@@ -25,6 +25,13 @@ export function Hero() {
     }
   }
 
+  const scrollToContact = () => {
+    const element = document.getElementById("contact")
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" })
+    }
+  }
+
   return (
     <section className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       <div className="absolute inset-0 -z-10">
@@ -134,13 +141,13 @@ export function Hero() {
           >
             <Linkedin className="h-8 w-8 lg:h-10 lg:w-10 group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-300" />
           </a>
-          <a
-            href="mailto:kyelldimatatac2@gmail.com"
+          <button
+            onClick={scrollToContact}
             className="group text-muted-foreground hover:text-primary transition-all duration-300"
-            aria-label="Email Contact"
+            aria-label="Contact Me"
           >
             <Mail className="h-8 w-8 lg:h-10 lg:w-10 group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-300" />
-          </a>
+          </button>
         </div>
       </div>
 
