@@ -25,14 +25,7 @@ export function About() {
       company: "Freelance",
       period: "2025 - Present",
       description:
-        "Developing and maintaining full-stack web applications including e-commerce platforms, event booking systems, and service management platforms. Tech stack includes React, JavaScript, and responsive design patterns.",
-    },
-    {
-      title: "Full Stack Web Developer",
-      company: "Multiple Clients",
-      period: "2025",
-      description:
-        "Built production-ready platforms: Kraftstories (e-commerce with inventory management), Kraft Universe (event booking system), and Onsite Craft Workshops (mobile-first service platform).",
+        "Developing and maintaining full-stack web applications including e-commerce platforms, event booking systems, and service management platforms. Built production-ready platforms: Kraftstories (e-commerce with inventory management), Kraft Universe (event booking system), and Onsite Craft Workshops (mobile-first service platform).",
     },
     {
       title: "AI and Security Intern",
