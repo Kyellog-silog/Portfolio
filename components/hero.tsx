@@ -111,7 +111,7 @@ export function Hero() {
             className="w-full sm:w-auto px-8 py-3 text-lg font-semibold hover:scale-105 transition-all duration-300"
             asChild
           >
-            <a href="/resume.pdf" download>
+            <a href="/Dimatatac_Resume.pdf" download>
               <Download className="mr-2 h-5 w-5" />
               Resume
             </a>
