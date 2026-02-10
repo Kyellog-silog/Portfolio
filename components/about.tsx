@@ -37,9 +37,9 @@ export function About() {
   ]
 
   return (
-    <section id="about" className="py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background via-muted/10 to-background">
+    <section id="about" className="py-20 lg:py-28 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background via-muted/10 to-background">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-20 lg:mb-24">
+        <div className="text-center mb-16 lg:mb-20">
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">About Me</h2>
           <div className="w-24 h-1 bg-primary mx-auto rounded-full mb-6"></div>
           <p className="text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto text-pretty leading-relaxed">
@@ -65,21 +65,21 @@ export function About() {
             </div>
 
             <div>
-              <h3 className="text-2xl lg:text-3xl font-semibold text-foreground mb-6 flex items-center">
-                <Calendar className="mr-3 h-7 w-7 text-primary" />
+              <h3 className="text-3xl lg:text-4xl font-semibold text-foreground mb-6 flex items-center">
+                <Calendar className="mr-3 h-8 w-8 text-primary" />
                 Experience
               </h3>
               <div className="space-y-6">
                 {experiences.map((exp, index) => (
                   <div key={index} className="border-l-2 border-primary pl-6 pb-6 last:pb-0">
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
-                      <h4 className="font-semibold text-foreground text-lg">{exp.title}</h4>
+                      <h4 className="font-semibold text-foreground text-xl lg:text-2xl">{exp.title}</h4>
                       <Badge variant="outline" className="w-fit">
                         {exp.period}
                       </Badge>
                     </div>
-                    <p className="text-primary font-medium mb-2">{exp.company}</p>
-                    <p className="text-muted-foreground">{exp.description}</p>
+                    <p className="text-primary font-medium mb-2 text-lg">{exp.company}</p>
+                    <p className="text-muted-foreground text-lg lg:text-lg leading-relaxed">{exp.description}</p>
                   </div>
                 ))}
               </div>
@@ -88,7 +88,7 @@ export function About() {
 
           <Card className="lg:sticky lg:top-8">
             <CardContent className="p-8 lg:p-10">
-              <h3 className="text-2xl lg:text-3xl font-semibold text-foreground mb-6">Technical Skills</h3>
+              <h3 className="text-3xl lg:text-4xl font-semibold text-foreground mb-6">Technical Skills</h3>
               <div className="flex flex-wrap gap-3 mb-8">
                 {skills.map((skill) => (
                   <Badge
