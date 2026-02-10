@@ -37,13 +37,13 @@ export function About() {
   ]
 
   return (
-    <section id="about" className="py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-muted/30">
+    <section id="about" className="py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background via-muted/10 to-background">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-20 lg:mb-24">
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">About Me</h2>
           <div className="w-24 h-1 bg-primary mx-auto rounded-full mb-6"></div>
           <p className="text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto text-pretty leading-relaxed">
-            Full Stack Web Developer with expertise in building scalable e-commerce, event management, and service platforms
+            Full Stack Developer crafting digital solutions for creative businesses and innovative ideas
           </p>
         </div>
 

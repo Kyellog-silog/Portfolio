@@ -54,14 +54,13 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-muted/30">
+    <section id="contact" className="py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-muted/10">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16 lg:mb-20">
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">Get In Touch</h2>
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">Let's Build Together</h2>
           <div className="w-24 h-1 bg-primary mx-auto rounded-full mb-6"></div>
           <p className="text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto text-pretty leading-relaxed">
-            I'm always interested in new opportunities and collaborations. Let's connect and build something amazing
-            together!
+            Have a project in mind or want to discuss opportunities? I'd love to hear from you.
           </p>
         </div>
 

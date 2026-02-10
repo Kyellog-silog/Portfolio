@@ -35,26 +35,26 @@ export function Hero() {
   return (
     <section className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-muted/20"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-background"></div>
 
-        {/* Floating code elements for backend theme */}
-        <div className="absolute top-20 left-20 opacity-10 text-primary font-mono text-sm animate-float">
-          {"{ API }"}
+        {/* Floating product/craft elements */}
+        <div className="absolute top-20 left-20 opacity-5 text-primary font-mono text-sm animate-float">
+          {"<component />"}
         </div>
-        <div className="absolute top-40 right-32 opacity-10 text-primary font-mono text-sm animate-float delay-300">
-          {"</server>"}
+        <div className="absolute top-40 right-32 opacity-5 text-primary font-mono text-sm animate-float delay-300">
+          {"{data}"}
         </div>
-        <div className="absolute bottom-32 left-16 opacity-10 text-primary font-mono text-sm animate-float delay-700">
-          {"SELECT *"}
+        <div className="absolute bottom-32 left-16 opacity-5 text-primary font-mono text-sm animate-float delay-700">
+          {"<deploy>"}
         </div>
-        <div className="absolute bottom-20 right-20 opacity-10 text-primary font-mono text-sm animate-float delay-500">
-          {"POST /api"}
+        <div className="absolute bottom-20 right-20 opacity-5 text-primary font-mono text-sm animate-float delay-500">
+          {"/build"}
         </div>
 
-        {/* Subtle geometric shapes */}
-        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-primary/5 rounded-full blur-3xl animate-pulse-glow"></div>
-        <div className="absolute top-3/4 right-1/4 w-96 h-96 bg-accent/3 rounded-full blur-3xl animate-pulse-glow delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-primary/4 rounded-full blur-3xl animate-pulse-glow delay-500"></div>
+        {/* Warm accent color accents */}
+        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-primary/8 rounded-full blur-3xl animate-pulse-glow"></div>
+        <div className="absolute top-3/4 right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse-glow delay-1000"></div>
+        <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-accent/6 rounded-full blur-3xl animate-pulse-glow delay-500"></div>
       </div>
 
       <div className="max-w-6xl mx-auto text-center space-y-12 lg:space-y-16 relative z-10">
@@ -71,7 +71,7 @@ export function Hero() {
           <h2
             className={`text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-semibold text-muted-foreground transition-all duration-1000 delay-200 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
           >
-            Computer Engineer & <span className="text-primary font-bold">Backend Developer</span>
+            Full Stack Web Developer & <span className="text-primary font-bold">Problem Solver</span>
           </h2>
         </div>
 
@@ -79,12 +79,10 @@ export function Hero() {
           className={`space-y-6 transition-all duration-1000 delay-400 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
         >
           <p className="text-lg sm:text-xl lg:text-2xl text-muted-foreground max-w-4xl mx-auto text-pretty leading-relaxed">
-            Passionate about building <span className="text-primary font-semibold">scalable APIs</span>, deploying{" "}
-            <span className="text-primary font-semibold">ML models</span> using federated learning, and creating
-            innovative solutions with modern technologies.
+            I build production-ready <span className="text-primary font-semibold">e-commerce platforms</span>, <span className="text-primary font-semibold">event booking systems</span>, and <span className="text-primary font-semibold">service management applications</span> that scale with real clients.
           </p>
           <p className="text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto">
-            Currently seeking opportunities in backend development and machine learning engineering.
+            Combining technical expertise with practical business solutions to create digital experiences that matter.
           </p>
         </div>
 

@@ -81,23 +81,63 @@ export function Portfolio() {
     <section id="portfolio" className="py-24 lg:py-32 px-6 sm:px-8 lg:px-12">
       <div className="max-w-full mx-auto">
         <div className="text-center mb-20 lg:mb-24">
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">Portfolio</h2>
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">Selected Work</h2>
           <div className="w-24 h-1 bg-primary mx-auto rounded-full mb-6"></div>
           <p className="text-xl lg:text-2xl text-muted-foreground max-w-4xl mx-auto text-pretty leading-relaxed">
-            A showcase of my recent projects in backend development, AI, and full-stack applications
+            Featured client projects and innovative personal applications showcasing full-stack expertise
           </p>
         </div>
 
-        <div className="flex flex-wrap justify-center gap-3 mb-12">
-          <Filter className="h-5 w-5 text-muted-foreground mr-2 mt-2" />
-          {filters.map((filter) => (
-            <Button
-              key={filter}
-              variant={activeFilter === filter ? "default" : "outline"}
-              size="sm"
-              onClick={() => setActiveFilter(filter)}
-              className="transition-all duration-300"
-            >
+        {/* Featured Client Projects Section */}
+        <div className="mb-24">
+          <h3 className="text-3xl font-bold text-foreground mb-2 px-4">Featured Client Work</h3>
+          <p className="text-muted-foreground mb-8 px-4 text-lg">Production platforms serving real businesses</p>
+          <div className="grid lg:grid-cols-3 gap-8 mb-12">
+            {projects.slice(0, 3).map((project) => (
+              <Card key={project.title} className="group overflow-hidden hover:shadow-lg transition-all duration-300 border-0 bg-card">
+                <CardHeader className="bg-gradient-to-r from-primary/10 to-accent/10 pb-4">
+                  <CardTitle className="text-xl text-foreground group-hover:text-primary transition-colors">{project.title}</CardTitle>
+                </CardHeader>
+                <CardContent className="pt-6 space-y-4">
+                  <p className="text-muted-foreground leading-relaxed">{project.description}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {project.technologies.slice(0, 3).map((tech) => (
+                      <Badge key={tech} variant="secondary" className="text-xs">
+                        {tech}
+                      </Badge>
+                    ))}
+                  </div>
+                  <div className="flex gap-3 pt-4">
+                    {project.liveUrl && (
+                      <Button variant="default" size="sm" asChild className="w-full">
+                        <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                          <ExternalLink className="mr-2 h-4 w-4" />
+                          Visit Site
+                        </a>
+                      </Button>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+
+        {/* Personal & Innovation Projects Section */}
+        <div>
+          <h3 className="text-3xl font-bold text-foreground mb-2 px-4">Innovation & Learning</h3>
+          <p className="text-muted-foreground mb-8 px-4 text-lg">Personal projects exploring AI, full-stack development, and new technologies</p>
+          
+          <div className="flex flex-wrap justify-start gap-3 mb-12 px-4">
+            <Filter className="h-5 w-5 text-muted-foreground mr-2 mt-2" />
+            {filters.map((filter) => (
+              <Button
+                key={filter}
+                variant={activeFilter === filter ? "default" : "outline"}
+                size="sm"
+                onClick={() => setActiveFilter(filter)}
+                className="transition-all duration-300"
+              >
               {filter}
             </Button>
           ))}
@@ -235,20 +275,17 @@ export function Portfolio() {
             </Dialog>
           ))}
         </div>
+        </div>
 
         <div className="text-center mt-20 lg:mt-24">
-          <p className="text-muted-foreground mb-8 text-xl lg:text-2xl leading-relaxed max-w-4xl mx-auto">
-            Currently working on exciting new projects including a coffee shop e-commerce website and a Roblox game.
-          </p>
           <Button
             asChild
-            variant="outline"
             size="lg"
-            className="text-lg lg:text-xl px-8 py-4 bg-transparent hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+            className="text-lg lg:text-xl px-8 py-4 hover:shadow-lg transition-all duration-300"
           >
             <a href="https://github.com/Kyellog-silog" target="_blank" rel="noopener noreferrer">
               <Github className="h-6 w-6 mr-3" />
-              View All Projects
+              View All Projects on GitHub
             </a>
           </Button>
         </div>
