@@ -15,19 +15,31 @@ export function Portfolio() {
 
   const projects = [
     {
-      title: "Rustique Café - Modern Coffee Shop Experience",
+      title: "Kraftstories - E-commerce & Workshop Platform",
       description:
-        "A modern, full-stack web application for a coffee shop featuring a beautiful user interface, comprehensive menu management, and advanced admin capabilities with real-time updates and secure authentication.",
-      screenshots: [
-        "/rustique-cafe-hero.png",
-        "/rustique-cafe-menu.png",
-        "/rustique-cafe-admin.png",
-        "/rustique-cafe-cart.png",
-      ],
-      technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Supabase", "PostgreSQL"],
+        "Full-stack e-commerce platform for craft workshops with product catalog, inventory management, and automated booking system. Multi-location support across Hawaii, NYC, San Francisco, and Irvine with seamless payment integration.",
+      technologies: ["React", "JavaScript", "E-commerce", "Payment Integration", "Inventory Management", "Booking System"],
       category: "Full-Stack",
-      liveUrl: "#",
-      githubUrl: "https://github.com/yourusername/rustique-cafe",
+      liveUrl: "https://kraftstories.com",
+      githubUrl: "https://github.com/Kyellog-silog",
+    },
+    {
+      title: "Kraft Universe - Event Booking Platform",
+      description:
+        "Interactive event booking and team building platform featuring multiple workshop categories, real-time availability management, custom event inquiry forms, and mobile-responsive design for corporate clients in NYC.",
+      technologies: ["React", "JavaScript", "Event Management", "Booking System", "Responsive Design", "Form Handling"],
+      category: "Full-Stack",
+      liveUrl: "https://www.artandcraftny.com",
+      githubUrl: "https://github.com/Kyellog-silog",
+    },
+    {
+      title: "Onsite Craft Workshops - Mobile Service Platform",
+      description:
+        "Service-based platform connecting mobile workshop facilitators with clients across NYC. Features workshop scheduling, location management, event type filtering, and responsive design for both mobile and desktop users.",
+      technologies: ["React", "JavaScript", "Mobile-First Design", "Service Booking", "Location Management"],
+      category: "Full-Stack",
+      liveUrl: "https://onsitecraftworkshops.com",
+      githubUrl: "https://github.com/Kyellog-silog",
     },
     {
       title: "TaskFlow - Task Management Platform",
@@ -50,14 +62,6 @@ export function Portfolio() {
         "Privacy-preserving lung disease classification using federated learning. Enables client-side model training with TensorFlow.js.",
       technologies: ["Python", "TensorFlow.js", "Flask", "React", "Docker", "ONNX.js"],
       category: "AI/ML",
-      githubUrl: "https://github.com/Kyellog-silog",
-    },
-    {
-      title: "Bayan Track - Community Management",
-      description:
-        "Centralized record management platform for local communities. Built secure APIs with Django for handling community data.",
-      technologies: ["Django", "Python", "PostgreSQL", "REST API"],
-      category: "Backend",
       githubUrl: "https://github.com/Kyellog-silog",
     },
     {

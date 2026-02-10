@@ -21,17 +21,25 @@ export function About() {
 
   const experiences = [
     {
+      title: "Full Stack Web Developer",
+      company: "Freelance",
+      period: "2025 - Present",
+      description:
+        "Developing and maintaining full-stack web applications including e-commerce platforms, event booking systems, and service management platforms. Tech stack includes React, JavaScript, and responsive design patterns.",
+    },
+    {
+      title: "Full Stack Web Developer",
+      company: "Multiple Clients",
+      period: "2025",
+      description:
+        "Built production-ready platforms: Kraftstories (e-commerce with inventory management), Kraft Universe (event booking system), and Onsite Craft Workshops (mobile-first service platform).",
+    },
+    {
       title: "AI and Security Intern",
       company: "Rakso CT",
       period: "2024",
       description:
         "Delivered technical presentations on Azure OpenAI and contributed to security awareness campaigns and CRM development.",
-    },
-    {
-      title: "Computer Engineering Student",
-      company: "Batangas State University",
-      period: "2021-2025",
-      description: "Focused on backend systems, machine learning, and federated learning platforms.",
     },
   ]
 
@@ -42,7 +50,7 @@ export function About() {
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">About Me</h2>
           <div className="w-24 h-1 bg-primary mx-auto rounded-full mb-6"></div>
           <p className="text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto text-pretty leading-relaxed">
-            Computer Engineering graduate with a passion for backend systems and AI
+            Full Stack Web Developer with expertise in building scalable e-commerce, event management, and service platforms
           </p>
         </div>
 
@@ -55,13 +63,10 @@ export function About() {
               </h3>
               <div className="space-y-6 text-muted-foreground text-lg lg:text-xl leading-relaxed">
                 <p>
-                  I'm a Computer Engineering graduate from Batangas State University, passionate about building scalable
-                  backend systems and deploying machine learning models. My experience spans from developing federated
-                  learning platforms to creating community management systems.
+                  I'm a Full Stack Web Developer specializing in building production-ready e-commerce platforms, event booking systems, and service management applications. With a Computer Engineering background from Batangas State University, I combine technical expertise with practical problem-solving to deliver scalable web solutions.
                 </p>
                 <p>
-                  Currently working on exciting projects including a coffee shop e-commerce website and a Roblox game,
-                  while actively seeking opportunities in backend development and machine learning engineering.
+                  My recent projects include Kraftstories (multi-location craft e-commerce platform), Kraft Universe (NYC-based event booking system), and Onsite Craft Workshops (mobile-first service platform). I'm passionate about creating user-centric applications that solve real business problems and scale efficiently.
                 </p>
               </div>
             </div>
