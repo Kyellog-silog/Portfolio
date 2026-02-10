@@ -54,21 +54,20 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-muted/30">
+    <section id="contact" className="py-20 lg:py-28 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-muted/10">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16 lg:mb-20">
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">Get In Touch</h2>
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">Let's Build Together</h2>
           <div className="w-24 h-1 bg-primary mx-auto rounded-full mb-6"></div>
           <p className="text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto text-pretty leading-relaxed">
-            I'm always interested in new opportunities and collaborations. Let's connect and build something amazing
-            together!
+            Have a project in mind or want to discuss opportunities? I'd love to hear from you.
           </p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
           <div className="space-y-8">
             <div>
-              <h3 className="text-2xl lg:text-3xl font-semibold text-foreground mb-8">Let's Connect</h3>
+              <h3 className="text-3xl lg:text-4xl font-semibold text-foreground mb-8">Let's Connect</h3>
               <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
                 Whether you have a project in mind, want to discuss opportunities, or just want to say hello, I'd love
                 to hear from you.
@@ -104,7 +103,7 @@ export function Contact() {
             </div>
 
             <div className="pt-8">
-              <h4 className="font-semibold text-foreground mb-4 text-lg">Follow Me</h4>
+              <h4 className="font-semibold text-foreground mb-4 text-xl lg:text-2xl">Follow Me</h4>
               <div className="flex space-x-4">
                 <a
                   href="https://github.com/Kyellog-silog"
@@ -128,7 +127,7 @@ export function Contact() {
 
           <Card className="border-2 hover:border-primary/20 transition-colors">
             <CardHeader className="pb-6">
-              <CardTitle className="text-2xl lg:text-3xl">Send a Message</CardTitle>
+              <CardTitle className="text-3xl lg:text-4xl">Send a Message</CardTitle>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-6">
