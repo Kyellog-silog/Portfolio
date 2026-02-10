@@ -90,26 +90,26 @@ export function Portfolio() {
 
         {/* Featured Client Projects Section */}
         <div className="mb-24">
-          <h3 className="text-3xl font-bold text-foreground mb-2 px-4">Featured Client Work</h3>
-          <p className="text-muted-foreground mb-8 px-4 text-lg">Production platforms serving real businesses</p>
+          <h3 className="text-4xl lg:text-5xl font-bold text-foreground mb-3 px-4">Featured Client Work</h3>
+          <p className="text-muted-foreground mb-12 px-4 text-lg">Production platforms serving real businesses</p>
           <div className="grid lg:grid-cols-3 gap-8 mb-12">
             {projects.slice(0, 3).map((project) => (
-              <Card key={project.title} className="group overflow-hidden hover:shadow-lg transition-all duration-300 border-0 bg-card">
-                <CardHeader className="bg-gradient-to-r from-primary/10 to-accent/10 pb-4">
-                  <CardTitle className="text-xl text-foreground group-hover:text-primary transition-colors">{project.title}</CardTitle>
+              <Card key={project.title} className="group overflow-hidden hover:shadow-xl transition-all duration-300 border border-border/50 bg-card flex flex-col hover:border-primary/30">
+                <CardHeader className="bg-primary/5 border-b border-border/30 pb-4">
+                  <CardTitle className="text-xl text-foreground group-hover:text-primary transition-colors leading-snug">{project.title}</CardTitle>
                 </CardHeader>
-                <CardContent className="pt-6 space-y-4">
-                  <p className="text-muted-foreground leading-relaxed">{project.description}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {project.technologies.slice(0, 3).map((tech) => (
-                      <Badge key={tech} variant="secondary" className="text-xs">
+                <CardContent className="pt-6 space-y-5 flex-1 flex flex-col">
+                  <p className="text-muted-foreground leading-relaxed text-sm">{project.description}</p>
+                  <div className="flex flex-wrap gap-2 pt-2">
+                    {project.technologies.map((tech, idx) => idx < 4 && (
+                      <Badge key={tech} variant="secondary" className="text-xs px-2.5 py-1">
                         {tech}
                       </Badge>
                     ))}
                   </div>
-                  <div className="flex gap-3 pt-4">
+                  <div className="flex gap-3 pt-2 mt-auto">
                     {project.liveUrl && (
-                      <Button variant="default" size="sm" asChild className="w-full">
+                      <Button variant="default" size="sm" asChild className="w-full font-medium">
                         <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
                           <ExternalLink className="mr-2 h-4 w-4" />
                           Visit Site

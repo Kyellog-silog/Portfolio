@@ -56,10 +56,10 @@ export function About() {
               </h3>
               <div className="space-y-6 text-muted-foreground text-lg lg:text-xl leading-relaxed">
                 <p>
-                  I'm a Full Stack Web Developer specializing in building production-ready e-commerce platforms, event booking systems, and service management applications. With a Computer Engineering background from Batangas State University, I combine technical expertise with practical problem-solving to deliver scalable web solutions.
+                  I'm a Full Stack Web Developer with experience building production web applications across various industries. With a Computer Engineering background from Batangas State University, I specialize in turning business ideas into scalable, user-focused solutions using modern web technologies.
                 </p>
                 <p>
-                  My recent projects include Kraftstories (multi-location craft e-commerce platform), Kraft Universe (NYC-based event booking system), and Onsite Craft Workshops (mobile-first service platform). I'm passionate about creating user-centric applications that solve real business problems and scale efficiently.
+                  I've worked on projects ranging from e-commerce platforms and booking systems to service marketplaces, each with unique challenges and technical requirements. I'm driven by creating digital experiences that matter and delivering code that not only works but scales with your business.
                 </p>
               </div>
             </div>

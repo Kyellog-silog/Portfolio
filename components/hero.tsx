@@ -71,7 +71,7 @@ export function Hero() {
           <h2
             className={`text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-semibold text-muted-foreground transition-all duration-1000 delay-200 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
           >
-            Full Stack Web Developer & <span className="text-primary font-bold">Problem Solver</span>
+            Full Stack <span className="text-primary font-bold">Web Developer</span>
           </h2>
         </div>
 
@@ -79,10 +79,10 @@ export function Hero() {
           className={`space-y-6 transition-all duration-1000 delay-400 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
         >
           <p className="text-lg sm:text-xl lg:text-2xl text-muted-foreground max-w-4xl mx-auto text-pretty leading-relaxed">
-            I build production-ready <span className="text-primary font-semibold">e-commerce platforms</span>, <span className="text-primary font-semibold">event booking systems</span>, and <span className="text-primary font-semibold">service management applications</span> that scale with real clients.
+            I build <span className="text-primary font-semibold">modern web applications</span> that solve real business problems. From e-commerce platforms to custom web solutions, I bring ideas to life with clean code and user-focused design.
           </p>
           <p className="text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto">
-            Combining technical expertise with practical business solutions to create digital experiences that matter.
+            Combining technical expertise with practical problem-solving to create scalable, production-ready applications.
           </p>
         </div>
 
