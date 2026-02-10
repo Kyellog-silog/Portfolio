@@ -42,7 +42,7 @@ export function Portfolio() {
       technologies: ["React", "Laravel", "PostgreSQL", "Tailwind CSS", "JWT"],
       category: "Full-Stack",
       liveUrl: "https://taskflow-frontend-production-9467.up.railway.app",
-      githubUrl: "https://github.com/Kyellog-silog",
+      githubUrl: "https://github.com/Kyellog-silog/Taskflow",
     },
     {
       title: "BagaNet - Federated Learning Platform",
@@ -50,7 +50,7 @@ export function Portfolio() {
         "Privacy-preserving lung disease classification using federated learning. Enables client-side model training with TensorFlow.js.",
       technologies: ["Python", "TensorFlow.js", "Flask", "React", "Docker", "ONNX.js"],
       category: "AI/ML",
-      githubUrl: "https://github.com/Kyellog-silog",
+      githubUrl: "https://github.com/Kyellog-silog/BagaNet",
     },
     {
       title: "Bayan Track - Community Management",

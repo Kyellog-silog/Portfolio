@@ -62,7 +62,7 @@ export function Hero() {
           className={`space-y-6 lg:space-y-8 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
         >
           <div className="space-y-4">
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold text-foreground text-balance leading-tight">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-foreground text-balance leading-tight">
               Kyell Dimatatac
             </h1>
             <div className="w-24 h-1 bg-primary mx-auto rounded-full"></div>
