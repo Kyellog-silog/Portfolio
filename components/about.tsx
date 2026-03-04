@@ -123,7 +123,7 @@ export function About() {
               </div>
 
               <Button className="w-full mt-8 bg-transparent" variant="outline" asChild>
-                <a href="/Dimatatac_Resume.pdf" download>
+                <a href="/Kyell_Dimatatac_Resume.pdf" download>
                   <Download className="mr-2 h-4 w-4" />
                   Download Resume
                 </a>
