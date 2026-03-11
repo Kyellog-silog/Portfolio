@@ -55,6 +55,52 @@ const Icons: Record<string, () => JSX.Element> = {
       <path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
     </svg>
   ),
+  HTML: () => (
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M4.14 3l1.59 17.88L12 22.5l6.27-1.62L19.86 3H4.14zM17.3 7.3H8.18l.22 2.48h8.68l-.7 7.84L12 18.88l-4.38-1.26-.3-3.35h2.43l.15 1.71 2.1.57 2.1-.57.22-2.46H7.5L6.83 7.3h10.47z" />
+    </svg>
+  ),
+  CSS: () => (
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M4.19 3l1.58 17.88L12 22.5l6.23-1.62L19.81 3H4.19zM16.9 7.3l-.14 1.58-.06.7H9.04l.2 2.24h7.26l-.56 6.34L12 19.22l-3.93-1.06-.27-3h2.17l.14 1.54 1.89.51 1.9-.51.2-2.2H7.69L7.1 7.3h9.8z" />
+    </svg>
+  ),
+  Python: () => (
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M14.25 2.26c-4.1-.49-7.74.89-7.74 3.15v1.68h7.74v1.12H6.5C4.25 8.21 2.26 9.5 2.01 12.4a8.94 8.94 0 000 .19c-.28 3.21 1.76 4.19 3.96 4.19h1.12v-2.01c0-2.53 2.19-3.71 4.19-3.71h6.67c1.82 0 3.03-1.25 3.03-2.91V6.45c0-1.69-1.68-2.72-3.92-2.99zm-3.64 2.1a.91.91 0 110 1.82.91.91 0 010-1.82z" />
+      <path d="M21.99 11.79c.26-3.04-1.79-4.19-4.19-4.19h-1.12v1.96c0 2.65-2.27 3.76-4.19 3.76H5.82c-1.84 0-3.03 1.27-3.03 2.91v2.65c0 1.76 1.77 2.71 3.92 2.99 4.06.49 7.41-.9 7.41-3.15v-1.68H7.38v-1.12h7.74c2.25 0 4.24-1.29 4.49-4.19.03-.38.04-.76.04-1.14h-.01c.15-.35.24-.7.35-.8zm-9.38 7.85a.91.91 0 110-1.82.91.91 0 010 1.82z" />
+    </svg>
+  ),
+  Laravel: () => (
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M21.7 6.53c.01.03.01.06.01.09v4.81c0 .12-.06.23-.17.29l-4.04 2.32v4.6c0 .12-.07.23-.17.29l-8.43 4.85c-.03.02-.07.03-.1.04h-.05c-.04-.01-.07-.02-.1-.04L.22 18.93a.34.34 0 01-.17-.29V4.87c0-.03 0-.06.01-.09.01-.03.02-.05.04-.08.01-.02.03-.04.05-.06.01-.01.04-.03.05-.04L4.44 2.08a.34.34 0 01.34 0l4.24 2.52c.02.01.04.03.05.04.02.02.04.04.05.06.02.03.03.05.04.08.01.03.01.06.01.09v9l3.5-2.01V7.04c0-.03 0-.06.01-.09.01-.03.02-.05.04-.08.01-.02.03-.04.05-.06.01-.01.04-.03.05-.04l4.24-2.52a.34.34 0 01.34 0l4.24 2.52c.02.01.04.03.05.04.02.02.04.04.05.06.02.03.03.05.04.08z" />
+    </svg>
+  ),
+  "REST APIs": () => (
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M6.5 10h-2v4h2v-4zm5 0h-2v4h2v-4zm11.5 6H1v2h22v-2zM16.5 10h-2v4h2v-4zM12 1L1 6v2h22V6L12 1z" />
+    </svg>
+  ),
+  Figma: () => (
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M8 24c2.2 0 4-1.8 4-4v-4H8c-2.2 0-4 1.8-4 4s1.8 4 4 4zm-4-16c0-2.2 1.8-4 4-4h4v8H8c-2.2 0-4-1.8-4-4zm0-8c0-2.2 1.8-4 4-4h4v8H8C5.8 4 4 2.2 4 0zm8-4h4c2.2 0 4 1.8 4 4s-1.8 4-4 4h-4V-4zm8 12c0 2.2-1.8 4-4 4s-4-1.8-4-4 1.8-4 4-4 4 1.8 4 4z" />
+    </svg>
+  ),
+  Git: () => (
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M23.55 10.85L13.15.45a1.53 1.53 0 00-2.17 0l-2.16 2.16 2.73 2.73a1.82 1.82 0 012.3 2.32l2.63 2.63a1.82 1.82 0 11-1.09 1.02L13.04 8.96v5.57a1.82 1.82 0 11-1.5-.08V8.71a1.82 1.82 0 01-.99-2.39L7.88 3.65.45 11.08a1.53 1.53 0 000 2.17l10.4 10.4a1.53 1.53 0 002.17 0l10.53-10.53a1.53 1.53 0 000-2.17z" />
+    </svg>
+  ),
+  Vercel: () => (
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 2L2 19.5h20L12 2z" />
+    </svg>
+  ),
+  Liquid: () => (
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 2c-3.31 0-6 4.03-6 9s2.69 9 6 9 6-4.03 6-9-2.69-9-6-9zm0 16c-2.21 0-4-3.13-4-7s1.79-7 4-7 4 3.13 4 7-1.79 7-4 7zm0-10a1.5 1.5 0 00-1.5 1.5c0 1.5 1.5 2.5 1.5 4a1.5 1.5 0 003 0c0-1.5-1.5-2.5-1.5-4A1.5 1.5 0 0012 8z" />
+    </svg>
+  ),
   Supabase: () => (
     <svg viewBox="0 0 24 24" fill="currentColor">
       <path d="M13.7 21.15c-.46.56-1.37.2-1.38-.54L12 12h7.17c.97 0 1.52 1.1.92 1.85L13.7 21.15zM10.3 2.85c.46-.56 1.37-.2 1.38.54L12 12H4.83c-.97 0-1.52-1.1-.92-1.85L10.3 2.85z" />
@@ -68,19 +114,28 @@ const Icons: Record<string, () => JSX.Element> = {
 }
 
 const SKILLS = [
-  // Page 1 (6)
-  { name: "Next.js",      rarity: "rare"      as const, xp: 78, desc: "React framework\nSSR + routing" },
+  // Page 1 — Core Stack (legendary + epic)
+  { name: "JavaScript",   rarity: "legendary" as const, xp: 88, desc: "Web sorcery\nES6+ equipped" },
   { name: "React",        rarity: "legendary" as const, xp: 90, desc: "Frontend mastery\nSPA wizardry" },
+  { name: "TypeScript",   rarity: "legendary" as const, xp: 78, desc: "Typed JS\nSafe & scalable" },
+  { name: "HTML",         rarity: "legendary" as const, xp: 92, desc: "Markup master\nSemantic web" },
+  { name: "CSS",          rarity: "legendary" as const, xp: 88, desc: "Style sorcerer\nLayout wizard" },
+  { name: "Next.js",      rarity: "epic"      as const, xp: 78, desc: "React framework\nSSR + routing" },
   { name: "Node.js",      rarity: "epic"      as const, xp: 72, desc: "Server runtime\nBackend power" },
-  { name: "JavaScript",   rarity: "legendary" as const, xp: 85, desc: "Web sorcery\nES6+ equipped" },
-  { name: "TypeScript",   rarity: "epic"      as const, xp: 74, desc: "Typed JS\nSafe & scalable" },
-  { name: "Tailwind CSS", rarity: "epic"      as const, xp: 76, desc: "Utility CSS\nRapid styling" },
-  // Page 2 (5)
-  { name: "Shopify",      rarity: "legendary" as const, xp: 88, desc: "E-commerce craft\nStore mastery" },
-  { name: "Wix",          rarity: "rare"      as const, xp: 80, desc: "Site builder\nClient ready" },
+  { name: "Python",       rarity: "epic"      as const, xp: 74, desc: "Versatile lang\nML + backend" },
+  { name: "Laravel",      rarity: "epic"      as const, xp: 76, desc: "PHP fortress\nREST mastery" },
+  { name: "REST APIs",    rarity: "epic"      as const, xp: 74, desc: "API architect\nFull-stack glue" },
+  // Page 2 — Platforms & Tools (rare + common)
+  { name: "Tailwind CSS", rarity: "rare"      as const, xp: 76, desc: "Utility CSS\nRapid styling" },
+  { name: "PostgreSQL",   rarity: "rare"      as const, xp: 68, desc: "Data guardian\nQuery champion" },
+  { name: "Shopify",      rarity: "rare"      as const, xp: 85, desc: "E-commerce craft\nStore mastery" },
   { name: "SEO",          rarity: "rare"      as const, xp: 75, desc: "Search tactics\nRank climber" },
+  { name: "Figma",        rarity: "rare"      as const, xp: 70, desc: "Design handoff\nUI blueprints" },
+  { name: "Wix",          rarity: "common"    as const, xp: 78, desc: "Site builder\nClient ready" },
+  { name: "Git",          rarity: "common"    as const, xp: 72, desc: "Version control\nBranch master" },
   { name: "Supabase",     rarity: "common"    as const, xp: 60, desc: "BaaS platform\nPostgres power" },
-  { name: "PostgreSQL",   rarity: "common"    as const, xp: 65, desc: "Data guardian\nQuery champion" },
+  { name: "Vercel",       rarity: "common"    as const, xp: 58, desc: "Deploy platform\nShip fast" },
+  { name: "Liquid",       rarity: "common"    as const, xp: 55, desc: "Shopify templates\nTheme craft" },
 ]
 
 const EXPERIENCES = [
@@ -117,7 +172,7 @@ export function About() {
   const gridRef = useRef<HTMLDivElement>(null)
   const [skillPage, setSkillPage] = useState(0)
 
-  const PAGES = [SKILLS.slice(0, 6), SKILLS.slice(6)]
+  const PAGES = [SKILLS.slice(0, 10), SKILLS.slice(10)]
   const totalPages = PAGES.length
 
   // Rarity counts (computed from full array)
@@ -221,7 +276,7 @@ export function About() {
           <div className="inv-corner-bl" aria-hidden="true" />
 
           <div className="inv-header">
-            <span className="inv-label">▶ EQUIPPED SKILLS [11/11]</span>
+            <span className="inv-label">▶ EQUIPPED SKILLS [20/20]</span>
             <span className="inv-cursor" aria-hidden="true">█</span>
           </div>
 
