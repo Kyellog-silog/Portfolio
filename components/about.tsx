@@ -1,14 +1,13 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState, useCallback } from "react"
 import type { JSX } from "react"
 
 // ── SVG skill icons ──────────────────────────────────────────────────────────
 const Icons: Record<string, () => JSX.Element> = {
-  Python: () => (
+  "Next.js": () => (
     <svg viewBox="0 0 24 24" fill="currentColor">
-      <path d="M14.25 2.26c-4.1-.49-7.74.89-7.74 3.15v1.68h7.74v1.12H6.5C4.25 8.21 2.26 9.5 2.01 12.4a8.94 8.94 0 000 .19c-.28 3.21 1.76 4.19 3.96 4.19h1.12v-2.01c0-2.53 2.19-3.71 4.19-3.71h6.67c1.82 0 3.03-1.25 3.03-2.91V6.45c0-1.69-1.68-2.72-3.92-2.99zm-3.64 2.1a.91.91 0 110 1.82.91.91 0 010-1.82z" />
-      <path d="M21.99 11.79c.26-3.04-1.79-4.19-4.19-4.19h-1.12v1.96c0 2.65-2.27 3.76-4.19 3.76H5.82c-1.84 0-3.03 1.27-3.03 2.91v2.65c0 1.76 1.77 2.71 3.92 2.99 4.06.49 7.41-.9 7.41-3.15v-1.68H7.38v-1.12h7.74c2.25 0 4.24-1.29 4.49-4.19.03-.38.04-.76.04-1.14h-.01c.15-.35.24-.7.35-.8zm-9.38 7.85a.91.91 0 110-1.82.91.91 0 010 1.82z" />
+      <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm-1.5 14.66V7.34l7.19 4.66-7.19 4.66z" />
     </svg>
   ),
   React: () => (
@@ -20,14 +19,9 @@ const Icons: Record<string, () => JSX.Element> = {
       <path d="M4.28 18.2c.73 1.27 2.38 1.64 4.28 1.09 1.03 1.01 2.24 1.73 3.44 2.1-2.56.27-4.97-.5-6.4-2.94a4.71 4.71 0 01-.52-2.72 7.78 7.78 0 01.83-3.38c.27.41.56.81.87 1.19-.68 1.54-.87 3.42-.5 4.66zm14.78-12.4c-.73-1.27-2.38-1.64-4.28-1.09A12.89 12.89 0 0011.34 2.7c2.56-.27 4.97.5 6.4 2.94.61 1.06.72 2.27.52 3.56a13.06 13.06 0 01-.87-1.19 7.78 7.78 0 00.67-2.21z" />
     </svg>
   ),
-  Django: () => (
+  "Node.js": () => (
     <svg viewBox="0 0 24 24" fill="currentColor">
-      <path d="M11.5 2H14v8.56l-2.5.8V2zm0 18.09c0 1.06-.86 1.91-1.91 1.91s-1.91-.85-1.91-1.91v-6.83l-1.91.6V20.09C5.77 22.24 7.53 24 9.59 24s3.82-1.76 3.82-3.91V9.81L11.5 10.6v9.49zM14 7h-2.5V2H14v5zm-5.59 2.46L5.77 10.4V18c0 2.15 1.76 3.91 3.82 3.91.64 0 1.25-.16 1.78-.45v-1.8a2.29 2.29 0 01-1.78.84 2.33 2.33 0 01-2.3-2.3v-7.08l1.12-.36v-1.3z" />
-    </svg>
-  ),
-  PostgreSQL: () => (
-    <svg viewBox="0 0 24 24" fill="currentColor">
-      <path d="M17.13 12.86a4.78 4.78 0 00.54-1.86c.13-.89.08-1.83-.05-2.61a5.69 5.69 0 00-3.07-4.17 5.63 5.63 0 00-5.31.02A5.69 5.69 0 006.17 8.4a7.2 7.2 0 00-.05 2.61 4.78 4.78 0 00.54 1.86C5.38 13.88 5 15.01 5 16c0 1.57.5 3 2.04 3.77V21a1 1 0 002 0v-1.5h5.92V21a1 1 0 002 0v-1.23C18.5 19 19 17.57 19 16c0-.99-.38-2.12-1.87-3.14zM12 5c2.16 0 3.67 1.3 3.67 1.3C17 7.7 17 9.37 17 10c0 .67-.1 1.24-.3 1.71-.44-.81-.91-1.57-1.37-2.15C14.3 8.31 13 7.5 12 7.5s-2.3.81-3.33 2.06c-.46.58-.93 1.34-1.37 2.15-.2-.47-.3-1.04-.3-1.71 0-.63 0-2.3 1.33-3.7C8.33 6.3 9.84 5 12 5z" />
+      <path d="M12 2L3 7v10l9 5 9-5V7l-9-5zm0 1.8l7.2 4v8.4L12 20.2l-7.2-4V7.8L12 3.8zm-1 5.2v6l-3-1.73V9.53L11 9zm2 0l3 1.73v3.74L13 16.2v-6z" />
     </svg>
   ),
   JavaScript: () => (
@@ -35,44 +29,58 @@ const Icons: Record<string, () => JSX.Element> = {
       <path d="M3 3h18v18H3V3zm9.73 14.96c.39.65 1.05 1.08 2.03 1.08 1.07 0 1.77-.54 1.77-1.28 0-.88-.71-1.2-1.9-1.71l-.65-.28c-1.88-.8-3.13-1.8-3.13-3.92 0-1.95 1.49-3.44 3.81-3.44 1.65 0 2.84.58 3.69 2.08l-2.02 1.3c-.44-.8-.92-1.12-1.67-1.12-.76 0-1.25.48-1.25 1.12 0 .78.48 1.1 1.6 1.58l.65.28c2.21.95 3.47 1.91 3.47 4.08 0 2.34-1.84 3.62-4.3 3.62-2.42 0-3.98-1.15-4.74-2.65l2.64-1.54zm-7.66.28c.28.5.54.93 1.15.93.59 0 .96-.23.96-1.13v-6.1h2.4v6.17c0 1.86-1.09 2.71-2.68 2.71-1.44 0-2.27-.74-2.69-1.64l.86-.94z" />
     </svg>
   ),
-  Docker: () => (
+  TypeScript: () => (
     <svg viewBox="0 0 24 24" fill="currentColor">
-      <path d="M13.98 11H12v-1.98h1.98V11zm-3.97 0h-1.98V9.02H10V11zm7.94 0h-1.98V9.02H17.95V11zm-3.97 0h-1.98V9.02H14V11zm-7.95 0H4.07V9.02H6.05V11zm3.97 0H8.04V9.02H10V11zm3.98-2.99h-1.98V6.03h1.98v1.98zm-3.98 0h-1.98V6.03H10v1.98zM23 11.67c-.5-.37-1.67-.51-2.58-.33-.13-1.04-.67-1.95-1.56-2.64L18.3 8.5l-.23.57a4.02 4.02 0 00-.23 1.42c0 .64.15 1.25.42 1.75-.2.12-.58.28-1.1.28H1.35l-.04.24a6.55 6.55 0 00.24 2.69 4.74 4.74 0 001.74 2.39C4.01 18.4 5.23 18.72 7 18.72c.95 0 2.04-.16 3.08-.54 1.57-.56 2.87-1.57 3.87-2.84a10.65 10.65 0 001.37-2.44h.17c1.07 0 2 .02 2.69-.91l.19-.28-.26-.19z" />
+      <path d="M3 3h18v18H3V3zm10.17 13.24v1.54c.26.13.57.24.93.32.36.08.74.12 1.14.12.39 0 .75-.04 1.08-.13.33-.09.61-.22.85-.4.24-.18.42-.41.55-.68.13-.27.2-.59.2-.95 0-.26-.04-.49-.12-.68a1.92 1.92 0 00-.35-.54 2.58 2.58 0 00-.54-.44c-.21-.13-.45-.26-.7-.38-.19-.09-.35-.18-.49-.27a1.78 1.78 0 01-.35-.27.97.97 0 01-.21-.3.86.86 0 01-.07-.35c0-.12.03-.23.08-.33.05-.1.13-.18.22-.25.1-.07.21-.12.35-.16.13-.03.28-.05.44-.05.12 0 .24.01.37.03.13.02.26.06.39.1.13.05.25.1.37.17.12.07.22.14.32.23V10.6a2.97 2.97 0 00-.82-.22 5.3 5.3 0 00-.88-.07c-.39 0-.74.05-1.06.14-.32.1-.6.23-.83.41-.23.18-.41.4-.54.66-.13.26-.19.55-.19.88 0 .43.11.8.33 1.1.22.3.56.57 1.01.8.19.1.37.19.53.28.16.09.3.18.42.28.12.1.21.2.27.32.07.12.1.25.1.4 0 .12-.02.22-.07.32-.05.1-.12.18-.22.25-.1.07-.22.12-.36.15-.15.04-.31.05-.5.05-.34 0-.67-.07-.99-.2-.32-.14-.6-.33-.85-.58zm-4.4-4.82v1.35h2.15v6.63h1.63v-6.63h2.15V11.42H8.77z" />
     </svg>
   ),
-  TensorFlow: () => (
+  "Tailwind CSS": () => (
     <svg viewBox="0 0 24 24" fill="currentColor">
-      <path d="M1.5 6.5v11l10.5 6V12.5L1.5 6.5zM13 5.31V1L22.5 6.5l-4.67 2.7L13 5.31zm0 13.38l4.83-2.79 4.17 2.4V12.5L13 6.5v12.19z" />
+      <path d="M12 6c-2.67 0-4.33 1.33-5 4 1-1.33 2.17-1.83 3.5-1.5.76.19 1.3.74 1.9 1.35C13.35 10.82 14.52 12 17 12c2.67 0 4.33-1.33 5-4-1 1.33-2.17 1.83-3.5 1.5-.76-.19-1.3-.74-1.9-1.35C15.65 7.18 14.48 6 12 6zM7 12c-2.67 0-4.33 1.33-5 4 1-1.33 2.17-1.83 3.5-1.5.76.19 1.3.74 1.9 1.35C8.35 16.82 9.52 18 12 18c2.67 0 4.33-1.33 5-4-1 1.33-2.17 1.83-3.5 1.5-.76-.19-1.3-.74-1.9-1.35C10.65 13.18 9.48 12 7 12z" />
     </svg>
   ),
-  MongoDB: () => (
+  Shopify: () => (
     <svg viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 2C9.89 2 7 5.26 7 10.05c0 3.64 1.56 6.23 3.85 7.41l.15 3.54h1.98l.16-3.54C15.44 16.28 17 13.69 17 10.05 17 5.26 14.11 2 12 2zm0 8.5c-.83 0-1.5-.67-1.5-1.5S11.17 7.5 12 7.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z" />
+      <path d="M15.34 3.8a.2.2 0 00-.18-.15c-.07 0-1.41-.1-1.41-.1s-.94-.93-1.04-1.03a.35.35 0 00-.25-.1l-.05 0-.36.11L11.7 1.3c-.19-.57-.52-1.1-1.1-1.1h-.05c-.33-.27-.73-.2-1.08.1A3.71 3.71 0 008.3 2.61l-1.05.33c-.33.1-.34.11-.38.42l-.82 6.28 6.15 1.15L15.34 3.8zM11.57 1.73l-.52 1.6a3.33 3.33 0 00-1.41-.37l.1-.75c.33-.5.7-.73 1.02-.73.33 0 .58.1.81.25zm-1.62-.6l-.12.93a2.52 2.52 0 00-1.05.15c.18-.54.54-.96.87-1.16.11-.06.2-.03.3.08zm-.76 4.59c.04.66 1.79.81 1.89 2.38.07 1.23-.66 2.08-1.71 2.14-1.27.08-1.96-.67-1.96-.67l.27-1.13s.7.52 1.25.49c.36-.02.5-.32.48-.52-.06-.87-1.47-.82-1.56-2.26-.08-1.2.72-2.43 2.46-2.54.67-.04 1.02.13 1.02.13l-.4 1.47s-.44-.2-.97-.17c-.78.05-.78.54-.76.66z" />
+      <path d="M15.16 3.65s-.35-.19-.78-.19c-.64 0-.67.4-.67.5 0 .54.07.85.07.85l1.99.54-.61-1.7zM12.72 22l3.57-.95s-1.53-10.38-1.54-10.45a.17.17 0 00-.16-.14c-.07 0-1.38-.03-1.38-.03L12.72 22z" />
     </svg>
   ),
-  Flask: () => (
+  Wix: () => (
     <svg viewBox="0 0 24 24" fill="currentColor">
-      <path d="M14 2v2.68l4.33 7.55A7 7 0 017.67 20.5 7 7 0 012 13.68a6.97 6.97 0 014-6.28V2h8zm-2 1H8v4.93l-.62.33a5.98 5.98 0 00-3.28 5.42 6 6 0 006 6 5.98 5.98 0 006-6 5.97 5.97 0 00-.97-3.27L12 8.28V3zm0 7.5l2.5 4.36A3.5 3.5 0 0112 16.5a3.5 3.5 0 01-2.5-5.97L12 10.5z" />
+      <path d="M3 7l2.5 10L8 10l2.5 7L13 7m3 0l2.5 10L21 7" />
     </svg>
   ),
-  Azure: () => (
+  SEO: () => (
     <svg viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12.96 2.29L8.07 13.14l6.28 1.1L5.73 21.71H19.5L12.96 2.29zm-1.42 2.13l-3.01 7.13 5.17.9-2.16-8.03z" />
+      <path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+    </svg>
+  ),
+  Supabase: () => (
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M13.7 21.15c-.46.56-1.37.2-1.38-.54L12 12h7.17c.97 0 1.52 1.1.92 1.85L13.7 21.15zM10.3 2.85c.46-.56 1.37-.2 1.38.54L12 12H4.83c-.97 0-1.52-1.1-.92-1.85L10.3 2.85z" />
+    </svg>
+  ),
+  PostgreSQL: () => (
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M17.13 12.86a4.78 4.78 0 00.54-1.86c.13-.89.08-1.83-.05-2.61a5.69 5.69 0 00-3.07-4.17 5.63 5.63 0 00-5.31.02A5.69 5.69 0 006.17 8.4a7.2 7.2 0 00-.05 2.61 4.78 4.78 0 00.54 1.86C5.38 13.88 5 15.01 5 16c0 1.57.5 3 2.04 3.77V21a1 1 0 002 0v-1.5h5.92V21a1 1 0 002 0v-1.23C18.5 19 19 17.57 19 16c0-.99-.38-2.12-1.87-3.14zM12 5c2.16 0 3.67 1.3 3.67 1.3C17 7.7 17 9.37 17 10c0 .67-.1 1.24-.3 1.71-.44-.81-.91-1.57-1.37-2.15C14.3 8.31 13 7.5 12 7.5s-2.3.81-3.33 2.06c-.46.58-.93 1.34-1.37 2.15-.2-.47-.3-1.04-.3-1.71 0-.63 0-2.3 1.33-3.7C8.33 6.3 9.84 5 12 5z" />
     </svg>
   ),
 }
 
 const SKILLS = [
-  { name: "Python",     rarity: "legendary" as const, xp: 95, desc: "Core language\nMax proficiency" },
-  { name: "React",      rarity: "legendary" as const, xp: 90, desc: "Frontend mastery\nSPA wizardry" },
-  { name: "Django",     rarity: "legendary" as const, xp: 88, desc: "Backend fortress\nPower unlocked" },
-  { name: "PostgreSQL", rarity: "rare"      as const, xp: 78, desc: "Data guardian\nQuery champion" },
-  { name: "JavaScript", rarity: "rare"      as const, xp: 82, desc: "Web sorcery\nES6+ equipped" },
-  { name: "Docker",     rarity: "rare"      as const, xp: 72, desc: "Container mage\nShip anything" },
-  { name: "TensorFlow", rarity: "epic"      as const, xp: 65, desc: "Neural craft\nAI unlocked" },
-  { name: "MongoDB",    rarity: "epic"      as const, xp: 68, desc: "NoSQL shaman\nFlexible data" },
-  { name: "Flask",      rarity: "common"    as const, xp: 55, desc: "Micro server\nLight & fast" },
-  { name: "Azure",      rarity: "common"    as const, xp: 50, desc: "Cloud novice\nLevel it up!" },
+  // Page 1 (6)
+  { name: "Next.js",      rarity: "rare"      as const, xp: 78, desc: "React framework\nSSR + routing" },
+  { name: "React",        rarity: "legendary" as const, xp: 90, desc: "Frontend mastery\nSPA wizardry" },
+  { name: "Node.js",      rarity: "epic"      as const, xp: 72, desc: "Server runtime\nBackend power" },
+  { name: "JavaScript",   rarity: "legendary" as const, xp: 85, desc: "Web sorcery\nES6+ equipped" },
+  { name: "TypeScript",   rarity: "epic"      as const, xp: 74, desc: "Typed JS\nSafe & scalable" },
+  { name: "Tailwind CSS", rarity: "epic"      as const, xp: 76, desc: "Utility CSS\nRapid styling" },
+  // Page 2 (5)
+  { name: "Shopify",      rarity: "legendary" as const, xp: 88, desc: "E-commerce craft\nStore mastery" },
+  { name: "Wix",          rarity: "rare"      as const, xp: 80, desc: "Site builder\nClient ready" },
+  { name: "SEO",          rarity: "rare"      as const, xp: 75, desc: "Search tactics\nRank climber" },
+  { name: "Supabase",     rarity: "common"    as const, xp: 60, desc: "BaaS platform\nPostgres power" },
+  { name: "PostgreSQL",   rarity: "common"    as const, xp: 65, desc: "Data guardian\nQuery champion" },
 ]
 
 const EXPERIENCES = [
@@ -107,16 +115,35 @@ const EXPERIENCES = [
 
 export function About() {
   const gridRef = useRef<HTMLDivElement>(null)
+  const [skillPage, setSkillPage] = useState(0)
 
+  const PAGES = [SKILLS.slice(0, 6), SKILLS.slice(6)]
+  const totalPages = PAGES.length
+
+  // Rarity counts (computed from full array)
+  const rarityCounts = SKILLS.reduce(
+    (acc, s) => { acc[s.rarity] = (acc[s.rarity] || 0) + 1; return acc },
+    {} as Record<string, number>,
+  )
+
+  const animateXp = useCallback(() => {
+    if (!gridRef.current) return
+    gridRef.current.querySelectorAll<HTMLElement>(".xp-fill").forEach((bar) => {
+      bar.style.width = "0%"
+      requestAnimationFrame(() => {
+        bar.style.width = (bar.dataset.xp ?? "0") + "%"
+      })
+    })
+  }, [])
+
+  // Initial XP animation on scroll
   useEffect(() => {
     if (!gridRef.current) return
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
           if (e.isIntersecting) {
-            document.querySelectorAll<HTMLElement>(".xp-fill").forEach((bar) => {
-              bar.style.width = (bar.dataset.xp ?? "0") + "%"
-            })
+            animateXp()
             observer.disconnect()
           }
         })
@@ -125,7 +152,12 @@ export function About() {
     )
     observer.observe(gridRef.current)
     return () => observer.disconnect()
-  }, [])
+  }, [animateXp])
+
+  // Re-animate XP bars on page change
+  useEffect(() => {
+    animateXp()
+  }, [skillPage, animateXp])
 
   // Scroll reveal
   useEffect(() => {
@@ -189,12 +221,12 @@ export function About() {
           <div className="inv-corner-bl" aria-hidden="true" />
 
           <div className="inv-header">
-            <span className="inv-label">▶ EQUIPPED SKILLS [10/10]</span>
+            <span className="inv-label">▶ EQUIPPED SKILLS [11/11]</span>
             <span className="inv-cursor" aria-hidden="true">█</span>
           </div>
 
           <div className="inv-grid" ref={gridRef}>
-            {SKILLS.map((s) => {
+            {PAGES[skillPage].map((s) => {
               const Icon = Icons[s.name]
               return (
                 <div key={s.name} className={`inv-slot ${s.rarity}`} tabIndex={0} role="button" aria-label={`${s.name} — ${s.rarity}`}>
@@ -217,6 +249,26 @@ export function About() {
             })}
           </div>
 
+          <div className="inv-page-nav">
+            <button
+              className="inv-page-btn"
+              onClick={() => setSkillPage((p) => Math.max(0, p - 1))}
+              disabled={skillPage === 0}
+              aria-label="Previous skill page"
+            >
+              ◀ PREV
+            </button>
+            <span className="inv-page-label">PAGE {skillPage + 1}/{totalPages}</span>
+            <button
+              className="inv-page-btn"
+              onClick={() => setSkillPage((p) => Math.min(totalPages - 1, p + 1))}
+              disabled={skillPage === totalPages - 1}
+              aria-label="Next skill page"
+            >
+              NEXT ▶
+            </button>
+          </div>
+
           <div className="inv-footer">
             <div className="inv-stat">
               <span className="inv-stat-label">CLASS</span>
@@ -224,19 +276,19 @@ export function About() {
             </div>
             <div className="inv-stat">
               <span className="inv-stat-label">LEGENDARY</span>
-              <span className="inv-stat-value" style={{ color: "var(--gold)" }}>3</span>
+              <span className="inv-stat-value" style={{ color: "var(--gold)" }}>{rarityCounts.legendary ?? 0}</span>
             </div>
             <div className="inv-stat">
               <span className="inv-stat-label">RARE</span>
-              <span className="inv-stat-value" style={{ color: "#60a5fa" }}>3</span>
+              <span className="inv-stat-value" style={{ color: "#60a5fa" }}>{rarityCounts.rare ?? 0}</span>
             </div>
             <div className="inv-stat">
               <span className="inv-stat-label">EPIC</span>
-              <span className="inv-stat-value" style={{ color: "#c084fc" }}>2</span>
+              <span className="inv-stat-value" style={{ color: "#c084fc" }}>{rarityCounts.epic ?? 0}</span>
             </div>
             <div className="inv-stat">
               <span className="inv-stat-label">COMMON</span>
-              <span className="inv-stat-value" style={{ color: "#9ca3af" }}>2</span>
+              <span className="inv-stat-value" style={{ color: "#9ca3af" }}>{rarityCounts.common ?? 0}</span>
             </div>
           </div>
         </div>

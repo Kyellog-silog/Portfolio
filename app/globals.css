@@ -792,6 +792,40 @@ body::after {
   border-top: 1px solid #2a3a5c;
   padding-top: 12px;
 }
+/* ── Skill page navigation ── */
+.inv-page-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 16px;
+}
+.inv-page-btn {
+  font-family: var(--font-press-start), monospace;
+  font-size: 7px;
+  letter-spacing: 1px;
+  color: var(--cream);
+  background: transparent;
+  border: 1px solid #2a3a5c;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.inv-page-btn:hover:not(:disabled) {
+  background: var(--navy);
+  border-color: var(--gold);
+  color: var(--gold);
+}
+.inv-page-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+.inv-page-label {
+  font-family: var(--font-press-start), monospace;
+  font-size: 7px;
+  color: var(--gold);
+  letter-spacing: 2px;
+}
 .inv-stat {
   display: flex;
   flex-direction: column;
