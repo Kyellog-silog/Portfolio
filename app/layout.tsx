@@ -1,16 +1,31 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { GeistSans } from "geist/font/sans"
-import { GeistMono } from "geist/font/mono"
+import { Press_Start_2P, VT323 } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { Suspense } from "react"
 import "./globals.css"
 
+const pressStart2P = Press_Start_2P({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-press-start",
+  display: "swap",
+})
+
+const vt323 = VT323({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-vt323",
+  display: "swap",
+})
+
 export const metadata: Metadata = {
-  title: "Kyell Dimatatac - Computer Engineer & Backend Developer",
+  title: "Kyell Dimatatac — Portfolio",
   description:
-    "Portfolio of Kyell Dimatatac, Computer Engineering graduate passionate about backend systems, AI, and full-stack development.",
-  generator: "v0.app",
+    "Portfolio of Kyell Dimatatac, Full Stack Web Developer building modern web applications.",
+  icons: {
+    icon: "/favicon.svg",
+  },
 }
 
 export default function RootLayout({
@@ -20,7 +35,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
+      <body className={`${pressStart2P.variable} ${vt323.variable}`}>
         <Suspense fallback={null}>{children}</Suspense>
         <Analytics />
       </body>
