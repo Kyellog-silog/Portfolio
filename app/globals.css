@@ -269,7 +269,7 @@ body::after {
   right: 0;
   background: rgba(6, 8, 16, 0.98);
   border-bottom: 3px solid var(--gold);
-  padding: 16px 32px;
+  padding: 16px 24px;
   flex-direction: column;
   gap: 16px;
 }
@@ -563,6 +563,8 @@ body::after {
   color: rgba(254, 178, 26, 0.4);
   letter-spacing: 2px;
   margin-bottom: 18px;
+  overflow: hidden;
+  max-width: 100%;
 }
 .inv-window {
   background: #111827;
@@ -2174,6 +2176,9 @@ body::after {
   .nav-mobile-btn {
     display: block;
   }
+  .nav-inner {
+    padding: 0 16px;
+  }
   .modal-gallery {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -2264,6 +2269,48 @@ body::after {
     min-width: 60px;
     font-size: 8px;
   }
+
+  /* Nav gutters */
+  .nav-inner {
+    padding: 0 12px;
+  }
+  .nav-mobile-menu {
+    padding: 16px 14px;
+  }
+
+  /* Skills divider */
+  .skills-divider {
+    letter-spacing: 0px;
+    font-size: 6px;
+  }
+
+  /* Hero compacting */
+  .hero-inner {
+    gap: 16px;
+    padding: 0 8px;
+  }
+  .hero-badge {
+    font-size: 7.5px;
+    padding: 7px 14px;
+  }
+  .hero-name {
+    text-shadow: 3px 3px 0 var(--navy);
+  }
+  .hero-desc {
+    max-width: 100%;
+    font-size: 18px;
+  }
+  .hero-btns {
+    gap: 10px;
+  }
+  .retro-btn {
+    padding: 11px 16px;
+    font-size: 7.5px;
+  }
+  .social-coin {
+    width: 46px;
+    height: 46px;
+  }
 }
 
 /* ══ MOBILE — 375px and below ══ */
@@ -2291,6 +2338,93 @@ body::after {
   .tech-bar-name {
     min-width: 54px;
     font-size: 7px;
+  }
+
+  /* Nav gutters */
+  .nav-inner {
+    padding: 0 10px;
+  }
+  .nav-mobile-menu {
+    padding: 16px 12px;
+  }
+
+  /* Skills divider */
+  .skills-divider {
+    letter-spacing: 0px;
+    font-size: 5.5px;
+  }
+
+  /* Hero compacting */
+  .hero-inner {
+    gap: 14px;
+  }
+  .hero-badge {
+    font-size: 7px;
+    padding: 6px 12px;
+  }
+  .hero-desc {
+    font-size: 17px;
+  }
+  .retro-btn {
+    padding: 11px 14px;
+  }
+}
+
+/* ══ MOBILE — 344px and below (Galaxy Z Fold folded) ══ */
+@media (max-width: 344px) {
+  /* Nav */
+  .nav-inner {
+    padding: 0 10px;
+  }
+  .nav-mobile-menu {
+    padding: 16px 10px;
+  }
+
+  /* Sections */
+  .section-wrap {
+    padding: 40px 10px 32px;
+  }
+  .ch3-inner {
+    padding: 0 8px;
+  }
+
+  /* Hero */
+  .hero-inner {
+    gap: 12px;
+    padding: 0 4px;
+  }
+  .hero-badge {
+    font-size: 6.5px;
+    padding: 6px 10px;
+  }
+  .hero-name {
+    text-shadow: 2px 2px 0 var(--navy);
+  }
+  .hero-desc {
+    font-size: 16px;
+  }
+  .retro-btn {
+    padding: 10px 12px;
+    font-size: 7px;
+  }
+  .social-coin {
+    width: 42px;
+    height: 42px;
+  }
+
+  /* Projects */
+  .mission-card {
+    width: 90px;
+    min-width: 90px;
+    height: 130px;
+  }
+
+  /* Skills */
+  .inv-window {
+    padding: 10px;
+  }
+  .inv-page-btn {
+    padding: 10px 12px;
   }
 }
 
