@@ -1406,6 +1406,7 @@ body::after {
   gap: 10px;
   width: 100%;
   max-width: 680px;
+  overflow: hidden;
 }
 .slide-wrap .slide {
   flex: 1;
@@ -1574,6 +1575,23 @@ body::after {
 .ch3-block {
   margin-bottom: 64px;
 }
+/* Scroll-edge fade cue on mobile — only active when row overflows */
+@media (max-width: 768px) {
+  .ch3-block {
+    position: relative;
+  }
+  .ch3-stage-row {
+    /* Fade only the right edge so the leftmost card is never hidden */
+    mask-image: linear-gradient(to right, black 0%, black 80%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, black 0%, black 80%, transparent 100%);
+  }
+  .panel-screenshots {
+    padding: 14px 12px;
+  }
+  .slide-wrap {
+    max-width: 100%;
+  }
+}
 .ch3-section-label {
   display: flex;
   align-items: center;
@@ -1613,7 +1631,11 @@ body::after {
   padding-top: 12px;
   padding-bottom: 12px;
   gap: 0;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
 }
+.ch3-stage-row::-webkit-scrollbar { display: none; }
 .mission-card {
   width: 170px;
   min-width: 170px;
@@ -1625,6 +1647,7 @@ body::after {
   flex-shrink: 0;
   transition: border-color 0.2s, transform 0.15s, box-shadow 0.2s;
   user-select: none;
+  scroll-snap-align: start;
 }
 .mission-card:hover,
 .mission-card:focus-visible {
@@ -1788,6 +1811,8 @@ body::after {
   margin-top: 24px;
   border: 3px solid var(--gold);
   background: rgba(6, 8, 16, 0.97);
+  overflow: hidden;
+  max-width: 100%;
 }
 .panel-header {
   background: var(--navy);
@@ -1976,11 +2001,13 @@ body::after {
   gap: 12px;
 }
 .panel-slide-img {
-  max-height: 260px;
-  object-fit: cover;
+  width: 100%;
+  max-width: 100%;
+  max-height: 240px;
+  object-fit: contain;
   border: 3px solid var(--navy);
   display: block;
-  width: 100%;
+  min-width: 0;
   flex: 1;
 }
 
@@ -2040,6 +2067,12 @@ body::after {
   .mission-card { width: 140px; min-width: 140px; height: 160px; }
   .card-icon-zone { width: 50px; height: 50px; top: 22px; }
   .panel-footer { flex-direction: column; align-items: flex-start; }
+  .ch3-stage-row {
+    justify-content: flex-start;
+    padding-left: 8px;
+    padding-right: 24px;
+    scroll-padding-left: 8px;
+  }
 }
 
 /* ══ ACCESSIBILITY — FOCUS STYLES ══ */
@@ -2161,6 +2194,133 @@ body::after {
     height: 80px;
   }
 }
+
+/* ══ MOBILE — 430px and below ══ */
+@media (max-width: 430px) {
+  /* Section wrapper */
+  .section-wrap {
+    padding: 60px 16px 50px;
+  }
+
+  /* About — dialogue boxes */
+  .dialogue {
+    padding: 18px 20px;
+    font-size: 17px;
+  }
+  .quest {
+    padding: 14px 16px;
+  }
+  .inv-window {
+    padding: 14px;
+  }
+  .inv-page-btn {
+    font-size: 6px;
+    padding: 10px 18px;
+    min-height: 44px;
+  }
+
+  /* Projects — card row */
+  .ch3-inner {
+    padding: 0 12px;
+  }
+  .mission-card {
+    width: 120px;
+    min-width: 120px;
+    height: 150px;
+  }
+  .card-icon-zone {
+    width: 44px;
+    height: 44px;
+    top: 18px;
+  }
+  .ch3-connector {
+    padding: 0 4px;
+  }
+  .conn-dot {
+    width: 4px;
+    height: 4px;
+  }
+
+  /* Panel touch targets */
+  .panel-nav-btn {
+    min-height: 44px;
+    padding: 10px 18px;
+  }
+  .panel-close {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  .slide-arrow {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  .slide-dot {
+    width: 12px;
+    height: 12px;
+  }
+
+  /* Panel tech bar compression */
+  .tech-bar-name {
+    min-width: 60px;
+    font-size: 8px;
+  }
+}
+
+/* ══ MOBILE — 375px and below ══ */
+@media (max-width: 375px) {
+  .section-wrap {
+    padding: 50px 12px 40px;
+  }
+  .mission-card {
+    width: 100px;
+    min-width: 100px;
+    height: 140px;
+  }
+  .card-corner-px {
+    display: none;
+  }
+  .card-scanlines {
+    display: none;
+  }
+  .card-tag {
+    display: none;
+  }
+  .ch3-connector {
+    padding: 0 2px;
+  }
+  .tech-bar-name {
+    min-width: 54px;
+    font-size: 7px;
+  }
+}
+
+/* ══ TOUCH DEVICES — tap-to-toggle skill tooltip ══ */
+@media (hover: none) {
+  .inv-slot .inv-tooltip {
+    display: none;
+  }
+  .inv-slot.tooltip-open .inv-tooltip {
+    display: block;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    bottom: auto;
+    width: min(280px, 80vw);
+    z-index: 500;
+    pointer-events: auto;
+  }
+  /* Backdrop to close tooltip on outside tap */
+  .inv-slot.tooltip-open::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 499;
+  }
+  .inv-hint-hover { display: none; }
+  .inv-hint-touch { display: block; }
+}
+.inv-hint-touch { display: none; }
 
 /* ══ REDUCED MOTION ══ */
 @media (prefers-reduced-motion: reduce) {

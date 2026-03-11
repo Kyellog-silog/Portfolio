@@ -171,6 +171,7 @@ const EXPERIENCES = [
 export function About() {
   const gridRef = useRef<HTMLDivElement>(null)
   const [skillPage, setSkillPage] = useState(0)
+  const [activeTooltip, setActiveTooltip] = useState<number | null>(null)
 
   const PAGES = [SKILLS.slice(0, 10), SKILLS.slice(10)]
   const totalPages = PAGES.length
@@ -212,7 +213,19 @@ export function About() {
   // Re-animate XP bars on page change
   useEffect(() => {
     animateXp()
+    setActiveTooltip(null)
   }, [skillPage, animateXp])
+
+  // Close tooltip on outside click (touch devices)
+  useEffect(() => {
+    if (activeTooltip === null) return
+    function handleOutside(e: MouseEvent) {
+      const target = e.target as Element
+      if (!target.closest(".inv-slot")) setActiveTooltip(null)
+    }
+    document.addEventListener("click", handleOutside)
+    return () => document.removeEventListener("click", handleOutside)
+  }, [activeTooltip])
 
   // Scroll reveal
   useEffect(() => {
@@ -281,10 +294,13 @@ export function About() {
           </div>
 
           <div className="inv-grid" ref={gridRef}>
-            {PAGES[skillPage].map((s) => {
+            {PAGES[skillPage].map((s, idx) => {
               const Icon = Icons[s.name]
               return (
-                <div key={s.name} className={`inv-slot ${s.rarity}`} tabIndex={0} role="button" aria-label={`${s.name} — ${s.rarity}`}>
+                <div key={s.name} className={`inv-slot ${s.rarity}${activeTooltip === idx ? " tooltip-open" : ""}`} tabIndex={0} role="button" aria-label={`${s.name} \u2014 ${s.rarity}`} aria-expanded={activeTooltip === idx}
+                  onClick={(e) => { e.stopPropagation(); setActiveTooltip((prev) => (prev === idx ? null : idx)) }}
+                  onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setActiveTooltip((prev) => (prev === idx ? null : idx)) } }}
+                >
                   <span className="rarity-tag">{s.rarity.slice(0, 3).toUpperCase()}</span>
                   <div className="slot-icon">
                     {Icon && <Icon />}
@@ -348,7 +364,8 @@ export function About() {
           </div>
         </div>
 
-        <div className="inv-hint" aria-hidden="true">▼ HOVER TO INSPECT ITEM ▼</div>
+        <div className="inv-hint inv-hint-hover" aria-hidden="true">▼ HOVER TO INSPECT ITEM ▼</div>
+        <div className="inv-hint inv-hint-touch" aria-hidden="true">▼ TAP TO INSPECT ITEM ▼</div>
       </div>
     </section>
   )
