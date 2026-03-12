@@ -218,7 +218,7 @@ const TUTORIAL_STAGES: Stage[] = [
   },
   {
     id: "STG-06",
-    label: "PPL TRACKER",
+    label: "Workout TRACKER",
     icon: <IconBarbell />,
     tag: "FITNESS APP",
     tagClass: "tag-fitness",
