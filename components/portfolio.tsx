@@ -1,6 +1,7 @@
 ﻿"use client"
 
 import { useState, useEffect, useRef } from "react"
+import { createPortal } from "react-dom"
 import type { JSX } from "react"
 
 // ── SVG Icons ────────────────────────────────────────────────────────────────
@@ -72,6 +73,7 @@ type Stage = {
   stack: { name: string; pct: number }[]
   achievements: string[]
   screenshots?: string[]
+  fullPage?: boolean
 }
 
 // ── Data ─────────────────────────────────────────────────────────────────────
@@ -101,6 +103,12 @@ const MAIN_STAGES: Stage[] = [
       "Created and maintained content strategy",
       "Full store ownership from setup to daily ops",
     ],
+    screenshots: [
+      "/kraftstories-home.png",
+      "/Kraftstories-classes.png",
+      "/Kraftstories-NYC.png",
+    ],
+    fullPage: true,
   },
   {
     id: "STG-02",
@@ -252,7 +260,10 @@ export function Portfolio() {
   const [barWidths, setBarWidths] = useState<number[]>([])
   const [slideIndex, setSlideIndex] = useState(0)
   const [modalOpen, setModalOpen] = useState(false)
-  const [modalImg, setModalImg] = useState("")
+  const [modalSlides, setModalSlides] = useState<string[]>([])
+  const [modalIndex, setModalIndex] = useState(0)
+  const [modalFullPage, setModalFullPage] = useState(false)
+  const [modalUrl, setModalUrl] = useState("")
   const barTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
 
   // Scroll-reveal
@@ -294,10 +305,25 @@ export function Portfolio() {
     selectCard(group, next)
   }
 
-  function openModal(src: string) {
-    setModalImg(src)
+  function openModal(slides: string[], startIndex: number, fullPage = false, url = "") {
+    setModalSlides(slides)
+    setModalIndex(startIndex)
+    setModalFullPage(fullPage)
+    setModalUrl(url)
     setModalOpen(true)
   }
+
+  // Keyboard navigation for modal
+  useEffect(() => {
+    if (!modalOpen) return
+    function handleKey(e: KeyboardEvent) {
+      if (e.key === "ArrowLeft") setModalIndex((i) => (i - 1 + modalSlides.length) % modalSlides.length)
+      else if (e.key === "ArrowRight") setModalIndex((i) => (i + 1) % modalSlides.length)
+      else if (e.key === "Escape") setModalOpen(false)
+    }
+    window.addEventListener("keydown", handleKey)
+    return () => window.removeEventListener("keydown", handleKey)
+  }, [modalOpen, modalSlides.length])
 
   function renderStageRow(stages: Stage[], group: "main" | "tutorial") {
     const active = group === "main" ? activeMain : activeTutorial
@@ -431,45 +457,99 @@ export function Portfolio() {
           </div>
         </div>
 
-        {/* Screenshots (TaskFlow only) */}
+        {/* Screenshots */}
         {stage.screenshots && stage.screenshots.length > 0 && (
           <div className="panel-screenshots">
-            <div className="slide-wrap">
-              <button
-                className="slide-arrow"
-                onClick={() =>
-                  setSlideIndex((i) => (i - 1 + stage.screenshots!.length) % stage.screenshots!.length)
-                }
-                aria-label="Previous screenshot"
-              >
-                ◀
-              </button>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                className="panel-slide-img"
-                src={stage.screenshots[slideIndex]}
-                alt={`${stage.label} screenshot ${slideIndex + 1}`}
-                onClick={() => openModal(stage.screenshots![slideIndex])}
-                style={{ cursor: "pointer" }}
-              />
-              <button
-                className="slide-arrow"
-                onClick={() => setSlideIndex((i) => (i + 1) % stage.screenshots!.length)}
-                aria-label="Next screenshot"
-              >
-                ▶
-              </button>
-            </div>
-            <div className="slide-dots">
-              {stage.screenshots.map((_, i) => (
-                <button
-                  key={i}
-                  className={`slide-dot${i === slideIndex ? " active" : ""}`}
-                  onClick={() => setSlideIndex(i)}
-                  aria-label={`Screenshot ${i + 1}`}
-                />
-              ))}
-            </div>
+            {stage.fullPage ? (
+              <>
+                <div className="slide-wrap">
+                  <button
+                    className="slide-arrow"
+                    onClick={() =>
+                      setSlideIndex((i) => (i - 1 + stage.screenshots!.length) % stage.screenshots!.length)
+                    }
+                    aria-label="Previous screenshot"
+                  >
+                    ◀
+                  </button>
+                  <div
+                    className="browser-mockup"
+                    onClick={() => openModal(stage.screenshots!, slideIndex, true, stage.url || "")}
+                  >
+                    <div className="browser-chrome">
+                      <span className="browser-dot red" />
+                      <span className="browser-dot yellow" />
+                      <span className="browser-dot green" />
+                      <span className="browser-url">{stage.url || "kraftstories.com"}</span>
+                    </div>
+                    <div className="browser-viewport">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        className="browser-scroll-img"
+                        src={stage.screenshots[slideIndex]}
+                        alt={`${stage.label} page ${slideIndex + 1}`}
+                      />
+                    </div>
+                  </div>
+                  <button
+                    className="slide-arrow"
+                    onClick={() => setSlideIndex((i) => (i + 1) % stage.screenshots!.length)}
+                    aria-label="Next screenshot"
+                  >
+                    ▶
+                  </button>
+                </div>
+                <div className="slide-dots">
+                  {stage.screenshots.map((_, i) => (
+                    <button
+                      key={i}
+                      className={`slide-dot${i === slideIndex ? " active" : ""}`}
+                      onClick={() => setSlideIndex(i)}
+                      aria-label={`Page ${i + 1}`}
+                    />
+                  ))}
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="slide-wrap">
+                  <button
+                    className="slide-arrow"
+                    onClick={() =>
+                      setSlideIndex((i) => (i - 1 + stage.screenshots!.length) % stage.screenshots!.length)
+                    }
+                    aria-label="Previous screenshot"
+                  >
+                    ◀
+                  </button>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    className="panel-slide-img"
+                    src={stage.screenshots[slideIndex]}
+                    alt={`${stage.label} screenshot ${slideIndex + 1}`}
+                    onClick={() => openModal(stage.screenshots!, slideIndex)}
+                    style={{ cursor: "pointer" }}
+                  />
+                  <button
+                    className="slide-arrow"
+                    onClick={() => setSlideIndex((i) => (i + 1) % stage.screenshots!.length)}
+                    aria-label="Next screenshot"
+                  >
+                    ▶
+                  </button>
+                </div>
+                <div className="slide-dots">
+                  {stage.screenshots.map((_, i) => (
+                    <button
+                      key={i}
+                      className={`slide-dot${i === slideIndex ? " active" : ""}`}
+                      onClick={() => setSlideIndex(i)}
+                      aria-label={`Screenshot ${i + 1}`}
+                    />
+                  ))}
+                </div>
+              </>
+            )}
           </div>
         )}
 
@@ -519,33 +599,35 @@ export function Portfolio() {
   }
 
   return (
-    <section id="portfolio" className="section-wrap ch3-section">
-      <div className="ch3-inner">
-        <div className="chapter-title reveal">CHAPTER 3 : PROJECTS</div>
+    <>
+      <section id="portfolio" className="section-wrap ch3-section">
+        <div className="ch3-inner">
+          <div className="chapter-title reveal">CHAPTER 3 : PROJECTS</div>
 
-        {/* ── MAIN STAGES ── */}
-        <div className="ch3-block reveal">
-          <div className="ch3-section-label">
-            <span className="ch3-label-badge main">MAIN STAGES</span>
-            <span className="ch3-label-sub">— Featured Client Work —</span>
+          {/* ── MAIN STAGES ── */}
+          <div className="ch3-block reveal">
+            <div className="ch3-section-label">
+              <span className="ch3-label-badge main">MAIN STAGES</span>
+              <span className="ch3-label-sub">— Featured Client Work —</span>
+            </div>
+            {renderStageRow(MAIN_STAGES, "main")}
+            {renderPanel("main")}
           </div>
-          {renderStageRow(MAIN_STAGES, "main")}
-          {renderPanel("main")}
-        </div>
 
-        {/* ── TUTORIAL STAGES ── */}
-        <div className="ch3-block reveal">
-          <div className="ch3-section-label">
-            <span className="ch3-label-badge tutorial">TUTORIAL STAGES</span>
-            <span className="ch3-label-sub">— Innovation &amp; Learning —</span>
+          {/* ── TUTORIAL STAGES ── */}
+          <div className="ch3-block reveal">
+            <div className="ch3-section-label">
+              <span className="ch3-label-badge tutorial">TUTORIAL STAGES</span>
+              <span className="ch3-label-sub">— Innovation &amp; Learning —</span>
+            </div>
+            {renderStageRow(TUTORIAL_STAGES, "tutorial")}
+            {renderPanel("tutorial")}
           </div>
-          {renderStageRow(TUTORIAL_STAGES, "tutorial")}
-          {renderPanel("tutorial")}
         </div>
-      </div>
+      </section>
 
-      {/* ── IMAGE MODAL ── */}
-      {modalOpen && (
+      {/* ── IMAGE MODAL (portaled to body to escape ancestor transforms) ── */}
+      {modalOpen && modalSlides.length > 0 && createPortal(
         <div
           className="modal-overlay"
           onClick={() => setModalOpen(false)}
@@ -555,7 +637,9 @@ export function Portfolio() {
         >
           <div className="modal-window" onClick={(e) => e.stopPropagation()}>
             <div className="modal-titlebar">
-              <span className="modal-title">SCREENSHOT PREVIEW</span>
+              <span className="modal-title">
+                SCREENSHOT PREVIEW — {modalIndex + 1} / {modalSlides.length}
+              </span>
               <button
                 className="modal-close"
                 onClick={() => setModalOpen(false)}
@@ -564,14 +648,52 @@ export function Portfolio() {
                 CLOSE ✕
               </button>
             </div>
-            <div className="modal-body">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={modalImg} alt="Screenshot enlarged" className="modal-img" />
+            <div className="modal-body modal-body-slider">
+              <button
+                className="modal-nav-arrow"
+                onClick={() => setModalIndex((i) => (i - 1 + modalSlides.length) % modalSlides.length)}
+                aria-label="Previous screenshot"
+              >
+                ◀
+              </button>
+              {modalFullPage ? (
+                <div className="modal-browser-mockup">
+                  <div className="browser-chrome">
+                    <span className="browser-dot red" />
+                    <span className="browser-dot yellow" />
+                    <span className="browser-dot green" />
+                    <span className="browser-url">{modalUrl || "kraftstories.com"}</span>
+                  </div>
+                  <div className="modal-browser-viewport">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      className="modal-browser-scroll-img"
+                      src={modalSlides[modalIndex]}
+                      alt={`Screenshot ${modalIndex + 1} of ${modalSlides.length}`}
+                    />
+                  </div>
+                </div>
+              ) : (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img
+                  src={modalSlides[modalIndex]}
+                  alt={`Screenshot ${modalIndex + 1} of ${modalSlides.length}`}
+                  className="modal-img"
+                />
+              )}
+              <button
+                className="modal-nav-arrow"
+                onClick={() => setModalIndex((i) => (i + 1) % modalSlides.length)}
+                aria-label="Next screenshot"
+              >
+                ▶
+              </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
-    </section>
+    </>
   )
 }
 
