@@ -124,7 +124,7 @@ export function Hero({ loaderDelay = 3300 }: HeroProps) {
           <button className="retro-btn btn-gold" onClick={() => scrollTo("about")}>
             ABOUT ME
           </button>
-          <a href="/Kyell_Dimatatac_Resume.pdf" download className="retro-btn btn-cream">
+          <a href="/Kyell_resume.pdf" download className="retro-btn btn-cream">
             ⬇ RESUME
           </a>
         </div>
