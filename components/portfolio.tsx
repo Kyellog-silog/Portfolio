@@ -135,9 +135,10 @@ const MAIN_STAGES: Stage[] = [
       "Web design and layout modifications",
       "Responsive cross-device performance",
     ],
-    screenshots: [
-      "/Kraftuniverse-home.png",
-    ],
+      screenshots: [
+        "/Kraftuniverse-home.png",
+        "/Kraftuniverse-public_workshop.png",
+      ],
     fullPage: true,
   },
   {
