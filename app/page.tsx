@@ -41,15 +41,25 @@ export default function Home() {
       </div>
 
       {/* MAIN */}
-      <div className={`main-content${mainVisible ? " visible" : ""}`}>
+      <div id="main-content" className={`main-content${mainVisible ? " visible" : ""}`}>
         <Navigation />
         <Hero subtitleDelay={LOADER_DELAY + 300} />
         <About />
         <Portfolio />
         <Contact />
         <footer className="retro-footer">
-          © 2025 KYELL DIMATATAC &nbsp;|&nbsp; MADE WITH{" "}
-          <span className="hl">♥</span> &nbsp;|&nbsp; ALL RIGHTS RESERVED
+          <div className="footer-links">
+            <a href="https://github.com/Kyellog-silog" target="_blank" rel="noopener noreferrer">GITHUB</a>
+            <a href="https://www.linkedin.com/in/kyell-dimatatac-58882517a" target="_blank" rel="noopener noreferrer">LINKEDIN</a>
+            <a href="mailto:kyelldimatatac2@gmail.com">EMAIL</a>
+            <button type="button" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
+              ↑ TOP
+            </button>
+          </div>
+          <div className="footer-legal">
+            © {new Date().getFullYear()} KYELL DIMATATAC &nbsp;|&nbsp; MADE WITH{" "}
+            <span className="hl">♥</span> &nbsp;|&nbsp; ALL RIGHTS RESERVED
+          </div>
         </footer>
       </div>
     </>

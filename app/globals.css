@@ -69,6 +69,7 @@
   }
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 70px;
   }
   body {
     background: var(--dark);
@@ -244,6 +245,8 @@ body::after {
 .nav-links button:hover::after {
   width: 100%;
 }
+.nav-links a.active { color: var(--gold); }
+.nav-links a.active::after { width: 100%; }
 .nav-hud {
   font-family: var(--font-press-start), monospace;
   font-size: 8px;
@@ -275,6 +278,36 @@ body::after {
 }
 .nav-mobile-menu.open {
   display: flex;
+}
+.nav-mobile-link {
+  font-family: var(--font-press-start), monospace;
+  font-size: 8px;
+  color: var(--cream);
+  text-decoration: none;
+  letter-spacing: 2px;
+  transition: color 0.2s;
+}
+.nav-mobile-link:hover,
+.nav-mobile-link.active { color: var(--gold); }
+
+/* Skip-to-content link — visible only on keyboard focus */
+.skip-link {
+  position: absolute;
+  left: 8px;
+  top: -60px;
+  z-index: 200;
+  background: var(--gold);
+  color: var(--dark);
+  font-family: var(--font-press-start), monospace;
+  font-size: 8px;
+  padding: 10px 14px;
+  text-decoration: none;
+  border: 2px solid var(--cream);
+  transition: top 0.2s;
+}
+.skip-link:focus {
+  top: 8px;
+  outline: none;
 }
 
 /* ══ SECTIONS ══ */
@@ -1636,12 +1669,22 @@ body::after {
 .tfield {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   border-bottom: 2px solid rgba(19, 70, 134, 0.55);
   margin-bottom: 22px;
   padding: 9px 0;
   transition: border-color 0.2s;
 }
 .tfield:focus-within { border-color: var(--gold); }
+.tfield:has([aria-invalid="true"]) { border-color: var(--red); }
+.tfield-error {
+  flex-basis: 100%;
+  font-family: var(--font-vt323), monospace;
+  font-size: 15px;
+  color: var(--red);
+  letter-spacing: 0.5px;
+  padding-top: 6px;
+}
 .tprompt {
   font-family: var(--font-press-start), monospace;
   font-size: 8px;
@@ -2234,7 +2277,10 @@ body::after {
 
 /* ══ FOOTER ══ */
 .retro-footer {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
   padding: 36px 32px;
   border-top: 3px solid var(--navy);
   font-family: var(--font-press-start), monospace;
@@ -2243,6 +2289,32 @@ body::after {
   letter-spacing: 1px;
 }
 .retro-footer .hl { color: var(--red); }
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+}
+.footer-links a,
+.footer-links button {
+  font-family: var(--font-press-start), monospace;
+  font-size: 8px;
+  color: var(--cream);
+  text-decoration: none;
+  letter-spacing: 1px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s;
+}
+.footer-links a:hover,
+.footer-links button:hover { color: var(--gold); }
+.footer-legal {
+  text-align: center;
+  line-height: 1.9;
+}
 
 /* ══ SCROLLBAR ══ */
 ::-webkit-scrollbar { width: 10px; }

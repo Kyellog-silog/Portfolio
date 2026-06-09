@@ -40,11 +40,24 @@ const PILLS = [
 
 export function Contact() {
   const [openPills, setOpenPills] = useState<Record<string, boolean>>({})
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" })
+  // `company` is a honeypot — real users never see or fill it; bots do.
+  const [formData, setFormData] = useState({ name: "", email: "", message: "", company: "" })
+  const [errors, setErrors] = useState<{ name?: string; email?: string; message?: string }>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle")
   const abortRef = useRef<AbortController | null>(null)
   const dismissTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
+
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+  function validate(data: typeof formData) {
+    const next: { name?: string; email?: string; message?: string } = {}
+    if (!data.name.trim()) next.name = "Enter your name."
+    if (!data.email.trim()) next.email = "Enter your email."
+    else if (!EMAIL_RE.test(data.email.trim())) next.email = "Enter a valid email address."
+    if (!data.message.trim()) next.message = "Enter a message."
+    return next
+  }
 
   // Close all pills on Escape
   useEffect(() => {
@@ -61,12 +74,23 @@ export function Contact() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     if (submitStatus !== "idle") setSubmitStatus("idle")
-    setFormData({ ...formData, [e.target.name]: e.target.value })
+    const { name, value } = e.target
+    setFormData((prev) => ({ ...prev, [name]: value }))
+    if (errors[name as keyof typeof errors]) {
+      setErrors((prev) => ({ ...prev, [name]: undefined }))
+    }
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (isSubmitting) return
+
+    const found = validate(formData)
+    if (Object.keys(found).length > 0) {
+      setErrors(found)
+      return
+    }
+
     abortRef.current?.abort()
     abortRef.current = new AbortController()
     const timeoutId = setTimeout(() => abortRef.current?.abort(), 30000)
@@ -82,7 +106,8 @@ export function Contact() {
       clearTimeout(timeoutId)
       if (res.ok) {
         setSubmitStatus("success")
-        setFormData({ name: "", email: "", message: "" })
+        setFormData({ name: "", email: "", message: "", company: "" })
+        setErrors({})
       } else {
         setSubmitStatus("error")
       }
@@ -141,6 +166,20 @@ export function Contact() {
       {/* ── Send a Message ── */}
       <div className="cform-wrap reveal">
         <form className="cform" onSubmit={handleSubmit} noValidate>
+          {/* Honeypot — hidden from users, catches bots. */}
+          <div aria-hidden="true" style={{ position: "absolute", left: "-9999px", width: 1, height: 1, overflow: "hidden" }}>
+            <label htmlFor="ct-company">Company</label>
+            <input
+              id="ct-company"
+              name="company"
+              type="text"
+              tabIndex={-1}
+              autoComplete="off"
+              value={formData.company}
+              onChange={handleChange}
+            />
+          </div>
+
           <div className="tfield">
             <label className="tprompt" htmlFor="ct-name">&gt; NAME:</label>
             <input
@@ -149,10 +188,13 @@ export function Contact() {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              required
+              maxLength={100}
               autoComplete="name"
               placeholder="your name_"
+              aria-invalid={!!errors.name}
+              aria-describedby={errors.name ? "ct-name-err" : undefined}
             />
+            {errors.name && <span id="ct-name-err" className="tfield-error" role="alert">{errors.name}</span>}
           </div>
 
           <div className="tfield">
@@ -164,10 +206,13 @@ export function Contact() {
               type="email"
               value={formData.email}
               onChange={handleChange}
-              required
+              maxLength={254}
               autoComplete="email"
               placeholder="your@email.com_"
+              aria-invalid={!!errors.email}
+              aria-describedby={errors.email ? "ct-email-err" : undefined}
             />
+            {errors.email && <span id="ct-email-err" className="tfield-error" role="alert">{errors.email}</span>}
           </div>
 
           <div className="tfield">
@@ -179,9 +224,12 @@ export function Contact() {
               rows={5}
               value={formData.message}
               onChange={handleChange}
-              required
+              maxLength={2000}
               placeholder="your message here_"
+              aria-invalid={!!errors.message}
+              aria-describedby={errors.message ? "ct-msg-err" : undefined}
             />
+            {errors.message && <span id="ct-msg-err" className="tfield-error" role="alert">{errors.message}</span>}
           </div>
 
           {submitStatus === "success" && (

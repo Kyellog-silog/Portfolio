@@ -95,9 +95,9 @@ const MAIN_STAGES: Stage[] = [
       "Full store ownership from setup to daily ops",
     ],
     screenshots: [
-      "/kraftstories-home.png",
-      "/Kraftstories-classes.png",
-      "/Kraftstories-NYC.png",
+      "/kraftstories-home.jpg",
+      "/Kraftstories-classes.jpg",
+      "/Kraftstories-NYC.jpg",
     ],
     fullPage: true,
   },
@@ -123,8 +123,8 @@ const MAIN_STAGES: Stage[] = [
       "Responsive cross-device performance",
     ],
     screenshots: [
-      "/Kraftuniverse-home.png",
-      "/Kraftuniverse-public_workshop.png",
+      "/Kraftuniverse-home.jpg",
+      "/Kraftuniverse-public_workshop.jpg",
     ],
     fullPage: true,
   },
@@ -150,8 +150,8 @@ const MAIN_STAGES: Stage[] = [
       "Improved layout, UX, and on-page structure",
     ],
     screenshots: [
-      "/Craftforteam.png",
-      "/craftforteam-workshop.png",
+      "/Craftforteam.jpg",
+      "/craftforteam-workshop.jpg",
     ],
     fullPage: true,
   },
@@ -208,7 +208,7 @@ const SIDE_STAGES: Stage[] = [
       "ONNX model conversion",
       "Docker containerization",
     ],
-    thumb: "/federated-learning-medical-ai-dashboard.png",
+    thumb: "/federated-learning-medical-ai-dashboard.jpg",
   },
   {
     id: "STG-06",
@@ -232,6 +232,7 @@ const SIDE_STAGES: Stage[] = [
       "Progress tracking over time",
       "Live on Vercel",
     ],
+    screenshots: ["/workout-tracker.jpg"],
   },
 ]
 
