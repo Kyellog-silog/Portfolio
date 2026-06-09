@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState, useCallback } from "react"
+import { useEffect, useState } from "react"
 import type { JSX } from "react"
 
 // ── SVG skill icons ──────────────────────────────────────────────────────────
@@ -113,30 +113,34 @@ const Icons: Record<string, () => JSX.Element> = {
   ),
 }
 
+// Skills grouped by honest proficiency — no self-assigned scores.
+// core = daily drivers · working = used in real projects · familiar = lighter use / learning
 const SKILLS = [
-  // Page 1 — Core Stack (legendary + epic)
-  { name: "JavaScript",   rarity: "legendary" as const, xp: 88, desc: "Web sorcery\nES6+ equipped" },
-  { name: "React",        rarity: "legendary" as const, xp: 90, desc: "Frontend mastery\nSPA wizardry" },
-  { name: "TypeScript",   rarity: "legendary" as const, xp: 78, desc: "Typed JS\nSafe & scalable" },
-  { name: "HTML",         rarity: "legendary" as const, xp: 92, desc: "Markup master\nSemantic web" },
-  { name: "CSS",          rarity: "legendary" as const, xp: 88, desc: "Style sorcerer\nLayout wizard" },
-  { name: "Next.js",      rarity: "epic"      as const, xp: 78, desc: "React framework\nSSR + routing" },
-  { name: "Node.js",      rarity: "epic"      as const, xp: 72, desc: "Server runtime\nBackend power" },
-  { name: "Python",       rarity: "epic"      as const, xp: 74, desc: "Versatile lang\nML + backend" },
-  { name: "Laravel",      rarity: "epic"      as const, xp: 76, desc: "PHP fortress\nREST mastery" },
-  { name: "REST APIs",    rarity: "epic"      as const, xp: 74, desc: "API architect\nFull-stack glue" },
-  // Page 2 — Platforms & Tools (rare + common)
-  { name: "Tailwind CSS", rarity: "rare"      as const, xp: 76, desc: "Utility CSS\nRapid styling" },
-  { name: "PostgreSQL",   rarity: "rare"      as const, xp: 68, desc: "Data guardian\nQuery champion" },
-  { name: "Shopify",      rarity: "rare"      as const, xp: 85, desc: "E-commerce craft\nStore mastery" },
-  { name: "SEO",          rarity: "rare"      as const, xp: 75, desc: "Search tactics\nRank climber" },
-  { name: "Figma",        rarity: "rare"      as const, xp: 70, desc: "Design handoff\nUI blueprints" },
-  { name: "Wix",          rarity: "common"    as const, xp: 78, desc: "Site builder\nClient ready" },
-  { name: "Git",          rarity: "common"    as const, xp: 72, desc: "Version control\nBranch master" },
-  { name: "Supabase",     rarity: "common"    as const, xp: 60, desc: "BaaS platform\nPostgres power" },
-  { name: "Vercel",       rarity: "common"    as const, xp: 58, desc: "Deploy platform\nShip fast" },
-  { name: "Liquid",       rarity: "common"    as const, xp: 55, desc: "Shopify templates\nTheme craft" },
+  // Page 1 — Core + start of Working
+  { name: "JavaScript",   tier: "core" as const,     desc: "Web sorcery\nES6+ equipped" },
+  { name: "React",        tier: "core" as const,     desc: "Frontend mastery\nSPA wizardry" },
+  { name: "TypeScript",   tier: "core" as const,     desc: "Typed JS\nSafe & scalable" },
+  { name: "HTML",         tier: "core" as const,     desc: "Markup master\nSemantic web" },
+  { name: "CSS",          tier: "core" as const,     desc: "Style sorcerer\nLayout wizard" },
+  { name: "Tailwind CSS", tier: "core" as const,     desc: "Utility CSS\nRapid styling" },
+  { name: "Shopify",      tier: "core" as const,     desc: "E-commerce craft\nStore mastery" },
+  { name: "Next.js",      tier: "working" as const,  desc: "React framework\nSSR + routing" },
+  { name: "Node.js",      tier: "working" as const,  desc: "Server runtime\nBackend power" },
+  { name: "Python",       tier: "working" as const,  desc: "Versatile lang\nML + backend" },
+  // Page 2 — rest of Working + Familiar
+  { name: "Laravel",      tier: "working" as const,  desc: "PHP fortress\nREST mastery" },
+  { name: "REST APIs",    tier: "working" as const,  desc: "API architect\nFull-stack glue" },
+  { name: "PostgreSQL",   tier: "working" as const,  desc: "Data guardian\nQuery champion" },
+  { name: "SEO",          tier: "working" as const,  desc: "Search tactics\nRank climber" },
+  { name: "Wix",          tier: "working" as const,  desc: "Site builder\nClient ready" },
+  { name: "Git",          tier: "working" as const,  desc: "Version control\nBranch master" },
+  { name: "Figma",        tier: "working" as const,  desc: "Design handoff\nUI blueprints" },
+  { name: "Supabase",     tier: "familiar" as const, desc: "BaaS platform\nPostgres power" },
+  { name: "Vercel",       tier: "familiar" as const, desc: "Deploy platform\nShip fast" },
+  { name: "Liquid",       tier: "familiar" as const, desc: "Shopify templates\nTheme craft" },
 ]
+
+const TIER_TAG: Record<string, string> = { core: "CORE", working: "WORK", familiar: "FAM" }
 
 const EXPERIENCES = [
   {
@@ -145,7 +149,7 @@ const EXPERIENCES = [
     period: "2025–NOW",
     title: "FULL STACK WEB DEVELOPER",
     company: "⚔ Freelance",
-    desc: "Delivered 3 live client websites: Kraftstories full Shopify build (Figma → UI, content & ops), Kraft Universe Wix maintenance + SEO + redesign, and Onsite Craft full Wix build with UI/UX, SEO, and platform operations.",
+    desc: "Delivered 3 live client websites: Kraftstories full Shopify build (Figma → UI, content & ops), Kraft Universe Wix maintenance + SEO + redesign, and Craft for Team design overhaul + full SEO audit across SF (SoMa & FiDi) and San Jose.",
     questStyle: {} as React.CSSProperties,
   },
   {
@@ -169,52 +173,22 @@ const EXPERIENCES = [
 ]
 
 export function About() {
-  const gridRef = useRef<HTMLDivElement>(null)
   const [skillPage, setSkillPage] = useState(0)
   const [activeTooltip, setActiveTooltip] = useState<number | null>(null)
 
   const PAGES = [SKILLS.slice(0, 10), SKILLS.slice(10)]
   const totalPages = PAGES.length
 
-  // Rarity counts (computed from full array)
-  const rarityCounts = SKILLS.reduce(
-    (acc, s) => { acc[s.rarity] = (acc[s.rarity] || 0) + 1; return acc },
+  // Skill counts per proficiency tier
+  const tierCounts = SKILLS.reduce(
+    (acc, s) => { acc[s.tier] = (acc[s.tier] || 0) + 1; return acc },
     {} as Record<string, number>,
   )
 
-  const animateXp = useCallback(() => {
-    if (!gridRef.current) return
-    gridRef.current.querySelectorAll<HTMLElement>(".xp-fill").forEach((bar) => {
-      bar.style.width = "0%"
-      requestAnimationFrame(() => {
-        bar.style.width = (bar.dataset.xp ?? "0") + "%"
-      })
-    })
-  }, [])
-
-  // Initial XP animation on scroll
+  // Close any open tooltip when the skill page changes
   useEffect(() => {
-    if (!gridRef.current) return
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            animateXp()
-            observer.disconnect()
-          }
-        })
-      },
-      { threshold: 0.3 }
-    )
-    observer.observe(gridRef.current)
-    return () => observer.disconnect()
-  }, [animateXp])
-
-  // Re-animate XP bars on page change
-  useEffect(() => {
-    animateXp()
     setActiveTooltip(null)
-  }, [skillPage, animateXp])
+  }, [skillPage])
 
   // Close tooltip on outside click (touch devices)
   useEffect(() => {
@@ -249,7 +223,7 @@ export function About() {
         <div style={{ display: "flex", flexDirection: "column", gap: "28px" }}>
           <div className="dialogue">
             <span className="dialogue-label">▶ BACKGROUND</span>
-            Aspiring full-stack developer with hands-on experience delivering complete web solutions
+            Full-stack developer with hands-on experience delivering complete web solutions
             for real clients. Computer Engineering graduate from Batangas State University — I handle
             everything from design handoff to launch, specializing in Shopify, Wix, SEO, and
             ongoing site operations.
@@ -293,27 +267,23 @@ export function About() {
             <span className="inv-cursor" aria-hidden="true">█</span>
           </div>
 
-          <div className="inv-grid" ref={gridRef}>
+          <div className="inv-grid">
             {PAGES[skillPage].map((s, idx) => {
               const Icon = Icons[s.name]
               return (
-                <div key={s.name} className={`inv-slot ${s.rarity}${activeTooltip === idx ? " tooltip-open" : ""}`} tabIndex={0} role="button" aria-label={`${s.name} \u2014 ${s.rarity}`} aria-expanded={activeTooltip === idx}
+                <div key={s.name} className={`inv-slot ${s.tier}${activeTooltip === idx ? " tooltip-open" : ""}`} tabIndex={0} role="button" aria-label={`${s.name} \u2014 ${s.tier} skill`} aria-expanded={activeTooltip === idx}
                   onClick={(e) => { e.stopPropagation(); setActiveTooltip((prev) => (prev === idx ? null : idx)) }}
                   onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setActiveTooltip((prev) => (prev === idx ? null : idx)) } }}
                 >
-                  <span className="rarity-tag">{s.rarity.slice(0, 3).toUpperCase()}</span>
+                  <span className="tier-tag">{TIER_TAG[s.tier]}</span>
                   <div className="slot-icon">
                     {Icon && <Icon />}
                   </div>
                   <div className="slot-name">{s.name}</div>
-                  <div className="xp-wrap">
-                    <div className="xp-fill" data-xp={s.xp} />
-                  </div>
                   <div className="inv-tooltip" role="tooltip">
                     <div className="tt-name">{s.name}</div>
-                    <div className="tt-rarity">[{s.rarity.toUpperCase()}]</div>
+                    <div className="tt-tier">[{s.tier.toUpperCase()}]</div>
                     <div className="tt-desc">{s.desc.split("\n").map((line, i) => (<span key={i}>{line}{i < s.desc.split("\n").length - 1 && <br />}</span>))}</div>
-                    <div className="tt-xp">XP: {s.xp}/100</div>
                   </div>
                 </div>
               )
@@ -346,20 +316,16 @@ export function About() {
               <span className="inv-stat-value">WEB DEV</span>
             </div>
             <div className="inv-stat">
-              <span className="inv-stat-label">LEGENDARY</span>
-              <span className="inv-stat-value" style={{ color: "var(--gold)" }}>{rarityCounts.legendary ?? 0}</span>
+              <span className="inv-stat-label">CORE</span>
+              <span className="inv-stat-value" style={{ color: "var(--gold)" }}>{tierCounts.core ?? 0}</span>
             </div>
             <div className="inv-stat">
-              <span className="inv-stat-label">RARE</span>
-              <span className="inv-stat-value" style={{ color: "#60a5fa" }}>{rarityCounts.rare ?? 0}</span>
+              <span className="inv-stat-label">WORKING</span>
+              <span className="inv-stat-value" style={{ color: "#60a5fa" }}>{tierCounts.working ?? 0}</span>
             </div>
             <div className="inv-stat">
-              <span className="inv-stat-label">EPIC</span>
-              <span className="inv-stat-value" style={{ color: "#c084fc" }}>{rarityCounts.epic ?? 0}</span>
-            </div>
-            <div className="inv-stat">
-              <span className="inv-stat-label">COMMON</span>
-              <span className="inv-stat-value" style={{ color: "#9ca3af" }}>{rarityCounts.common ?? 0}</span>
+              <span className="inv-stat-label">FAMILIAR</span>
+              <span className="inv-stat-value" style={{ color: "#9ca3af" }}>{tierCounts.familiar ?? 0}</span>
             </div>
           </div>
         </div>

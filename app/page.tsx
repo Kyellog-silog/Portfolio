@@ -8,7 +8,7 @@ import { Contact } from "@/components/contact"
 import { Navigation } from "@/components/navigation"
 
 const WAVE_CHARS = "LOADING...".split("")
-const LOADER_DELAY = 2900
+const LOADER_DELAY = 600
 
 export default function Home() {
   const [loaderHidden, setLoaderHidden] = useState(false)
@@ -17,7 +17,7 @@ export default function Home() {
   useEffect(() => {
     const t1 = setTimeout(() => {
       setLoaderHidden(true)
-      const t2 = setTimeout(() => setMainVisible(true), 250)
+      const t2 = setTimeout(() => setMainVisible(true), 120)
       return () => clearTimeout(t2)
     }, LOADER_DELAY)
     return () => clearTimeout(t1)
@@ -43,7 +43,7 @@ export default function Home() {
       {/* MAIN */}
       <div className={`main-content${mainVisible ? " visible" : ""}`}>
         <Navigation />
-        <Hero loaderDelay={LOADER_DELAY + 400} />
+        <Hero subtitleDelay={LOADER_DELAY + 300} />
         <About />
         <Portfolio />
         <Contact />

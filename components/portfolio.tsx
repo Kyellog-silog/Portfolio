@@ -1,6 +1,6 @@
-﻿"use client"
+"use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect } from "react"
 import { createPortal } from "react-dom"
 import type { JSX } from "react"
 
@@ -40,13 +40,6 @@ function IconLung() {
     </svg>
   )
 }
-function IconBook() {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32" aria-hidden="true">
-      <path d="M18 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V4a2 2 0 00-2-2zm-5 14H7v-2h6v2zm3-4H7v-2h9v2zm0-4H7V6h9v2z" />
-    </svg>
-  )
-}
 function IconBarbell() {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32" aria-hidden="true">
@@ -66,13 +59,15 @@ type Stage = {
   statusLabel: string
   url?: string
   githubUrl?: string
-  desc: string
+  tagline: string // one-line value shown on the card face
+  desc: string // longer write-up shown in the expanded panel
   client: string
   year: string
   role: string
-  stack: { name: string; pct: number }[]
+  tech: string[] // plain tech tags (replaced self-assigned skill %)
   achievements: string[]
   screenshots?: string[]
+  thumb?: string // card-face image override (falls back to screenshots[0])
   fullPage?: boolean
 }
 
@@ -87,16 +82,12 @@ const MAIN_STAGES: Stage[] = [
     status: "live",
     statusLabel: "LIVE",
     url: "https://kraftstories.com",
+    tagline: "End-to-end Shopify storefront across 4 US locations.",
     desc: "End-to-end Shopify store ownership — translating Figma designs into a fully operational storefront with product catalog, content management, inventory setup, and booking flow across 4 US locations.",
     client: "Kraftstories",
     year: "2025",
     role: "Shopify Developer",
-    stack: [
-      { name: "Shopify", pct: 85 },
-      { name: "Figma → UI", pct: 78 },
-      { name: "SEO / Content", pct: 72 },
-      { name: "Web Operations", pct: 70 },
-    ],
+    tech: ["Shopify", "Figma → UI", "SEO", "Web Ops"],
     achievements: [
       "Translated Figma designs to live Shopify theme",
       "Managed product catalog across 4 US locations",
@@ -119,57 +110,54 @@ const MAIN_STAGES: Stage[] = [
     status: "live",
     statusLabel: "LIVE",
     url: "https://www.artandcraftny.com",
+    tagline: "Wix maintenance, SEO & design for a NYC events company.",
     desc: "Wix website maintenance, SEO optimization, and ongoing web design updates for a NYC-based art & craft event company. Responsible for site performance, layout updates, and local search visibility.",
     client: "Kraft Universe",
     year: "2026",
     role: "Wix Dev / SEO",
-    stack: [
-      { name: "Wix", pct: 82 },
-      { name: "SEO", pct: 76 },
-      { name: "Web Design", pct: 72 },
-      { name: "UI/UX Ops", pct: 66 },
-    ],
+    tech: ["Wix", "SEO", "Web Design", "UI/UX"],
     achievements: [
       "Ongoing maintenance and content updates",
       "SEO strategy for NYC local search",
       "Web design and layout modifications",
       "Responsive cross-device performance",
     ],
-      screenshots: [
-        "/Kraftuniverse-home.png",
-        "/Kraftuniverse-public_workshop.png",
-      ],
+    screenshots: [
+      "/Kraftuniverse-home.png",
+      "/Kraftuniverse-public_workshop.png",
+    ],
     fullPage: true,
   },
   {
     id: "STG-03",
-    label: "ONSITE CRAFT",
+    label: "CRAFT FOR TEAM",
     icon: <IconWrench />,
-    tag: "SERVICE",
+    tag: "DESIGN + SEO",
     tagClass: "tag-service",
     status: "live",
     statusLabel: "LIVE",
-    url: "https://onsitecraftworkshops.com",
-    desc: "Built the Onsite Craft Workshops website from the ground up on Wix — full UI/UX design, platform setup, SEO strategy, and ongoing operations. Connects workshop facilitators with clients across the NYC area.",
-    client: "Onsite Craft",
+    url: "https://www.craftforteam.com",
+    tagline: "Design overhaul & full SEO audit — SF & San Jose workshops.",
+    desc: "Overhauled the design of the Craft for Team website and ran a full SEO audit. The site covers on-site team-building workshop locations across San Francisco (SoMa & FiDi) and San Jose.",
+    client: "Craft for Team",
     year: "2026",
-    role: "Wix Dev / SEO",
-    stack: [
-      { name: "Wix", pct: 82 },
-      { name: "UI/UX Design", pct: 76 },
-      { name: "SEO", pct: 72 },
-      { name: "Web Operations", pct: 68 },
-    ],
+    role: "Web Design / SEO",
+    tech: ["Web Design", "UI/UX", "SEO", "Web Ops"],
     achievements: [
-      "Full website build from design to launch",
-      "UI/UX design and platform configuration",
-      "SEO strategy and local search setup",
-      "Ongoing maintenance and operations",
+      "Full design overhaul of the live site",
+      "Conducted a comprehensive SEO audit",
+      "Optimized for SF SoMa, FiDi & San Jose local search",
+      "Improved layout, UX, and on-page structure",
     ],
+    screenshots: [
+      "/Craftforteam.png",
+      "/craftforteam-workshop.png",
+    ],
+    fullPage: true,
   },
 ]
 
-const TUTORIAL_STAGES: Stage[] = [
+const SIDE_STAGES: Stage[] = [
   {
     id: "STG-04",
     label: "TASKFLOW",
@@ -180,16 +168,12 @@ const TUTORIAL_STAGES: Stage[] = [
     statusLabel: "LIVE",
     url: "https://taskflow-frontend-production-9467.up.railway.app",
     githubUrl: "https://github.com/Kyellog-silog/Taskflow",
+    tagline: "Full-stack Kanban task manager with real-time collaboration.",
     desc: "Full-stack task management app with drag-and-drop Kanban boards, real-time updates, and team collaboration features built with React and Laravel.",
     client: "Personal Project",
     year: "2025",
     role: "Full-Stack Dev",
-    stack: [
-      { name: "React", pct: 86 },
-      { name: "Laravel", pct: 74 },
-      { name: "PostgreSQL", pct: 68 },
-      { name: "Tailwind CSS", pct: 78 },
-    ],
+    tech: ["React", "Laravel", "PostgreSQL", "Tailwind"],
     achievements: [
       "Drag-and-drop Kanban board",
       "Real-time team collaboration",
@@ -212,26 +196,23 @@ const TUTORIAL_STAGES: Stage[] = [
     status: "done",
     statusLabel: "COMPLETE",
     githubUrl: "https://github.com/Kyellog-silog/BagaNet",
+    tagline: "Privacy-preserving lung disease classification via federated learning.",
     desc: "Privacy-preserving lung disease classification using federated learning. Enables client-side model training with TensorFlow.js without sharing raw medical data.",
     client: "Thesis",
     year: "2025",
     role: "ML Engineer",
-    stack: [
-      { name: "Python", pct: 84 },
-      { name: "TensorFlow.js", pct: 76 },
-      { name: "Flask", pct: 65 },
-      { name: "React", pct: 70 },
-    ],
+    tech: ["Python", "TensorFlow.js", "Flask", "React"],
     achievements: [
       "Federated learning architecture",
       "Privacy-preserving ML flow",
       "ONNX model conversion",
       "Docker containerization",
     ],
+    thumb: "/federated-learning-medical-ai-dashboard.png",
   },
   {
     id: "STG-06",
-    label: "Workout TRACKER",
+    label: "WORKOUT TRACKER",
     icon: <IconBarbell />,
     tag: "FITNESS APP",
     tagClass: "tag-fitness",
@@ -239,16 +220,12 @@ const TUTORIAL_STAGES: Stage[] = [
     statusLabel: "IN PROGRESS",
     url: "https://ppl-tracker-tau.vercel.app",
     githubUrl: "https://github.com/Kyellog-silog/Workout-Tracker",
+    tagline: "Customizable Push/Pull/Legs workout progress tracker.",
     desc: "Workout progress tracker with customizable Push/Pull/Legs split routines. Users can tailor exercises per day, log sets and reps, and monitor gains over time.",
     client: "Personal Project",
     year: "2026",
     role: "Full-Stack Dev",
-    stack: [
-      { name: "React", pct: 80 },
-      { name: "TypeScript", pct: 74 },
-      { name: "Tailwind CSS", pct: 72 },
-      { name: "Backend API", pct: 60 },
-    ],
+    tech: ["React", "TypeScript", "Tailwind", "REST API"],
     achievements: [
       "Customizable PPL split routines",
       "Per-day workout configuration",
@@ -261,15 +238,13 @@ const TUTORIAL_STAGES: Stage[] = [
 // ── Component ────────────────────────────────────────────────────────────────
 export function Portfolio() {
   const [activeMain, setActiveMain] = useState<number | null>(null)
-  const [activeTutorial, setActiveTutorial] = useState<number | null>(null)
-  const [barWidths, setBarWidths] = useState<number[]>([])
+  const [activeSide, setActiveSide] = useState<number | null>(null)
   const [slideIndex, setSlideIndex] = useState(0)
   const [modalOpen, setModalOpen] = useState(false)
   const [modalSlides, setModalSlides] = useState<string[]>([])
   const [modalIndex, setModalIndex] = useState(0)
   const [modalFullPage, setModalFullPage] = useState(false)
   const [modalUrl, setModalUrl] = useState("")
-  const barTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
 
   // Scroll-reveal
   useEffect(() => {
@@ -281,33 +256,28 @@ export function Portfolio() {
     return () => obs.disconnect()
   }, [])
 
-  function selectCard(group: "main" | "tutorial", idx: number) {
-    const isToggle = group === "main" ? activeMain === idx : activeTutorial === idx
-    if (isToggle) {
-      group === "main" ? setActiveMain(null) : setActiveTutorial(null)
-      setBarWidths([])
+  function toggleDetails(group: "main" | "side", idx: number) {
+    const isOpen = group === "main" ? activeMain === idx : activeSide === idx
+    if (isOpen) {
+      group === "main" ? setActiveMain(null) : setActiveSide(null)
       return
     }
     if (group === "main") setActiveMain(idx)
-    else setActiveTutorial(idx)
+    else setActiveSide(idx)
     setSlideIndex(0)
-    setBarWidths([])
-    clearTimeout(barTimer.current)
-    barTimer.current = setTimeout(() => {
-      const stages = group === "main" ? MAIN_STAGES : TUTORIAL_STAGES
-      setBarWidths(stages[idx].stack.map((s) => s.pct))
-    }, 80)
   }
 
-  function navPanel(group: "main" | "tutorial", dir: "prev" | "next") {
-    const stages = group === "main" ? MAIN_STAGES : TUTORIAL_STAGES
-    const active = group === "main" ? activeMain : activeTutorial
+  function navPanel(group: "main" | "side", dir: "prev" | "next") {
+    const stages = group === "main" ? MAIN_STAGES : SIDE_STAGES
+    const active = group === "main" ? activeMain : activeSide
     if (active === null) return
     const next =
       dir === "prev"
         ? (active - 1 + stages.length) % stages.length
         : (active + 1) % stages.length
-    selectCard(group, next)
+    if (group === "main") setActiveMain(next)
+    else setActiveSide(next)
+    setSlideIndex(0)
   }
 
   function openModal(slides: string[], startIndex: number, fullPage = false, url = "") {
@@ -330,64 +300,88 @@ export function Portfolio() {
     return () => window.removeEventListener("keydown", handleKey)
   }, [modalOpen, modalSlides.length])
 
-  function renderStageRow(stages: Stage[], group: "main" | "tutorial") {
-    const active = group === "main" ? activeMain : activeTutorial
+  function renderGrid(stages: Stage[], group: "main" | "side") {
+    const active = group === "main" ? activeMain : activeSide
     return (
-      <div className="ch3-stage-row">
-        {stages.map((s, i) => (
-          <div key={s.id} style={{ display: "contents" }}>
-            <div
-              className={`mission-card${active === i ? " active" : ""}`}
-              onClick={() => selectCard(group, i)}
-              role="button"
-              tabIndex={0}
-              aria-pressed={active === i}
-              aria-label={`Select project ${s.label}`}
-              onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && selectCard(group, i)}
-            >
+      <div className="proj-grid">
+        {stages.map((s, i) => {
+          const thumb = s.thumb ?? s.screenshots?.[0]
+          const isOpen = active === i
+          return (
+            <article key={s.id} className={`proj-card${isOpen ? " active" : ""}`}>
               <div className="card-corner-px tl" />
               <div className="card-corner-px tr" />
               <div className="card-corner-px bl" />
               <div className="card-corner-px br" />
-              <div className={`card-status ${s.status}`}>
-                {s.status === "live" && <span className="status-dot" aria-hidden="true" />}
-                {s.statusLabel}
-              </div>
-              <div className="card-icon-zone">
-                {s.icon}
+
+              {/* Media — real screenshot when available, icon fallback otherwise */}
+              <div className="proj-media">
+                {thumb ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img className="proj-thumb" src={thumb} alt={`${s.label} preview`} loading="lazy" />
+                ) : (
+                  <div className="proj-media-icon">{s.icon}</div>
+                )}
                 <div className="card-scanlines" aria-hidden="true" />
+                <span className="proj-id">{s.id}</span>
+                <div className={`card-status ${s.status}`}>
+                  {s.status === "live" && <span className="status-dot" aria-hidden="true" />}
+                  {s.statusLabel}
+                </div>
               </div>
-              <div className="card-id">{s.id}</div>
-              <div className="card-name">{s.label}</div>
-              <div className="card-tag">{s.tag}</div>
-            </div>
-            {i < stages.length - 1 && (
-              <div className="ch3-connector" aria-hidden="true">
-                <span className="conn-dot" />
-                <span className="conn-dot" />
-                <span className="conn-dot" />
-                <span className="conn-dot" />
-                <span className="conn-arrow" />
+
+              {/* Body — everything readable without a click */}
+              <div className="proj-body">
+                <h3 className="proj-name">{s.label}</h3>
+                <div className={`proj-tag ${s.tagClass}`}>{s.tag}</div>
+                <p className="proj-tagline">{s.tagline}</p>
+                <div className="proj-tech">
+                  {s.tech.map((t) => (
+                    <span className="tech-chip" key={t}>{t}</span>
+                  ))}
+                </div>
               </div>
-            )}
-          </div>
-        ))}
+
+              {/* Actions */}
+              <div className="proj-actions">
+                {s.url && (
+                  <a className="proj-link primary" href={s.url} target="_blank" rel="noopener noreferrer">
+                    LIVE ↗
+                  </a>
+                )}
+                {s.githubUrl && (
+                  <a className="proj-link" href={s.githubUrl} target="_blank" rel="noopener noreferrer">
+                    CODE ↗
+                  </a>
+                )}
+                <button
+                  className="proj-details-btn"
+                  onClick={() => toggleDetails(group, i)}
+                  aria-expanded={isOpen}
+                  aria-controls={`panel-${group}`}
+                >
+                  {isOpen ? "HIDE ▴" : "DETAILS ▾"}
+                </button>
+              </div>
+            </article>
+          )
+        })}
       </div>
     )
   }
 
-  function renderPanel(group: "main" | "tutorial") {
-    const active = group === "main" ? activeMain : activeTutorial
+  function renderPanel(group: "main" | "side") {
+    const active = group === "main" ? activeMain : activeSide
     if (active === null) return null
-    const stages = group === "main" ? MAIN_STAGES : TUTORIAL_STAGES
+    const stages = group === "main" ? MAIN_STAGES : SIDE_STAGES
     const stage = stages[active]
     return (
-      <div className="mission-panel">
+      <div className="mission-panel" id={`panel-${group}`}>
         {/* Panel Header */}
         <div className="panel-header">
           <div className="panel-header-left">
             <span className={`panel-track ${group}`}>
-              {group === "main" ? "MAIN STAGE" : "TUTORIAL STAGE"}
+              {group === "main" ? "CLIENT WORK" : "SIDE PROJECT"}
             </span>
             <span className="panel-id">{stage.id}</span>
             <span className="panel-name">{stage.label}</span>
@@ -399,7 +393,7 @@ export function Portfolio() {
             </span>
             <button
               className="panel-close"
-              onClick={() => group === "main" ? setActiveMain(null) : setActiveTutorial(null)}
+              onClick={() => group === "main" ? setActiveMain(null) : setActiveSide(null)}
               aria-label="Close panel"
             >
               ✕
@@ -407,11 +401,10 @@ export function Portfolio() {
           </div>
         </div>
 
-        {/* Panel Body — 3 columns */}
+        {/* Panel Body — 2 columns (overview + achievements) */}
         <div className="panel-body">
-          {/* Col 1: Mission Overview */}
           <div className="panel-col">
-            <div className="panel-col-title">MISSION OVERVIEW</div>
+            <div className="panel-col-title">OVERVIEW</div>
             <p className="panel-overview">{stage.desc}</p>
             <div className="panel-meta">
               <div className="panel-meta-row">
@@ -426,29 +419,13 @@ export function Portfolio() {
                 <span className="meta-key">ROLE</span>
                 <span className="meta-val">{stage.role}</span>
               </div>
+              <div className="panel-meta-row">
+                <span className="meta-key">STACK</span>
+                <span className="meta-val">{stage.tech.join(" · ")}</span>
+              </div>
             </div>
           </div>
 
-          {/* Col 2: Tech Stack */}
-          <div className="panel-col">
-            <div className="panel-col-title">TECH STACK</div>
-            <div className="tech-bar-list">
-              {stage.stack.map((item, i) => (
-                <div className="tech-bar-row" key={item.name}>
-                  <span className="tech-bar-name">{item.name}</span>
-                  <div className="tech-bar-track">
-                    <div
-                      className="tech-bar-fill"
-                      style={{ width: barWidths[i] !== undefined ? `${barWidths[i]}%` : "0%" }}
-                    />
-                  </div>
-                  <span className="tech-bar-pct">{item.pct}%</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Col 3: Key Achievements */}
           <div className="panel-col">
             <div className="panel-col-title">KEY ACHIEVEMENTS</div>
             <ul className="achievement-list">
@@ -609,24 +586,24 @@ export function Portfolio() {
         <div className="ch3-inner">
           <div className="chapter-title reveal">CHAPTER 3 : PROJECTS</div>
 
-          {/* ── MAIN STAGES ── */}
+          {/* ── CLIENT WORK ── */}
           <div className="ch3-block reveal">
             <div className="ch3-section-label">
-              <span className="ch3-label-badge main">MAIN STAGES</span>
-              <span className="ch3-label-sub">— Featured Client Work —</span>
+              <span className="ch3-label-badge main">CLIENT WORK</span>
+              <span className="ch3-label-sub">— Shipped &amp; maintained for real businesses —</span>
             </div>
-            {renderStageRow(MAIN_STAGES, "main")}
+            {renderGrid(MAIN_STAGES, "main")}
             {renderPanel("main")}
           </div>
 
-          {/* ── TUTORIAL STAGES ── */}
+          {/* ── SIDE PROJECTS ── */}
           <div className="ch3-block reveal">
             <div className="ch3-section-label">
-              <span className="ch3-label-badge tutorial">TUTORIAL STAGES</span>
-              <span className="ch3-label-sub">— Innovation &amp; Learning —</span>
+              <span className="ch3-label-badge tutorial">SIDE PROJECTS</span>
+              <span className="ch3-label-sub">— Experiments, thesis &amp; learning —</span>
             </div>
-            {renderStageRow(TUTORIAL_STAGES, "tutorial")}
-            {renderPanel("tutorial")}
+            {renderGrid(SIDE_STAGES, "side")}
+            {renderPanel("side")}
           </div>
         </div>
       </section>
@@ -701,5 +678,3 @@ export function Portfolio() {
     </>
   )
 }
-
-

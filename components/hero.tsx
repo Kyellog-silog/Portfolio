@@ -4,56 +4,25 @@ import { useEffect, useRef, useState } from "react"
 
 const NAME1 = "KYELL"
 const NAME2 = "DIMATATAC"
-const PHRASES = ["ASPIRING FULL-STACK DEV", "SHOPIFY & WIX DEVELOPER", "SEO & WEB OPERATIONS", "CODE CRAFTSMAN"]
+const PHRASES = ["FULL-STACK DEVELOPER", "SHOPIFY & WIX DEVELOPER", "SEO & WEB OPERATIONS", "CODE CRAFTSMAN"]
 
 interface HeroProps {
-  loaderDelay?: number
+  /** Delay before the rotating subtitle begins typing (ms). Does NOT gate the rest of the hero. */
+  subtitleDelay?: number
 }
 
-export function Hero({ loaderDelay = 3300 }: HeroProps) {
-  const [name1, setName1] = useState("")
-  const [name2, setName2] = useState("")
-  const [cur1Visible, setCur1Visible] = useState(false)
-  const [cur2Visible, setCur2Visible] = useState(false)
-  const [subVisible, setSubVisible] = useState(false)
+export function Hero({ subtitleDelay = 700 }: HeroProps) {
   const [subText, setSubText] = useState("")
   const abortRef = useRef(false)
 
+  // Rotating subtitle typewriter. The name, description, buttons and socials are
+  // rendered immediately below — only this decorative role-rotation is animated.
   useEffect(() => {
     abortRef.current = false
-
-    const wait = (ms: number) =>
-      new Promise<void>((res) => {
-        const t = setTimeout(res, ms)
-        return () => clearTimeout(t)
-      })
+    const wait = (ms: number) => new Promise<void>((res) => setTimeout(res, ms))
 
     async function run() {
-      await wait(loaderDelay)
-      if (abortRef.current) return
-
-      // Type name1
-      setCur1Visible(true)
-      for (let i = 0; i <= NAME1.length; i++) {
-        if (abortRef.current) return
-        setName1(NAME1.slice(0, i))
-        await wait(110)
-      }
-      await wait(300)
-      setCur1Visible(false)
-      setCur2Visible(true)
-
-      // Type name2
-      for (let i = 0; i <= NAME2.length; i++) {
-        if (abortRef.current) return
-        setName2(NAME2.slice(0, i))
-        await wait(110)
-      }
-      await wait(900)
-      setCur2Visible(false)
-      setSubVisible(true)
-
-      // Subtitle typewriter loop
+      await wait(subtitleDelay)
       let pi = 0
       let ci = 0
       let del = false
@@ -81,11 +50,10 @@ export function Hero({ loaderDelay = 3300 }: HeroProps) {
 
     run()
     return () => { abortRef.current = true }
-    // loaderDelay intentionally excluded — only run once on mount
+    // subtitleDelay intentionally excluded — only run once on mount
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // Scroll helpers
   const scrollTo = (id: string) =>
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })
 
@@ -95,21 +63,19 @@ export function Hero({ loaderDelay = 3300 }: HeroProps) {
         <div className="hero-badge">★ PLAYER ONE HAS ENTERED ★</div>
 
         <h1 className="hero-name">
-          <span>{name1}</span>
-          {cur1Visible && <span className="cursor-blink" aria-hidden="true" />}
+          <span>{NAME1}</span>
           <br />
-          <span className="hi">{name2}</span>
-          {cur2Visible && <span className="cursor-blink" aria-hidden="true" />}
+          <span className="hi">{NAME2}</span>
         </h1>
 
-        <div
-          className="hero-sub"
-          style={{ opacity: subVisible ? 1 : 0, transition: "opacity 0.5s" }}
-          aria-live="polite"
-          aria-label={`Role: ${subText}`}
-        >
-          <span>{subText}</span>
+        <div className="hero-sub">
+          {/* Animated text is hidden from assistive tech to avoid per-keystroke spam... */}
+          <span aria-hidden="true">{subText}</span>
           <span className="cursor-blink" aria-hidden="true" />
+          {/* ...the full role list is exposed statically instead. */}
+          <span className="sr-only">
+            Roles: full-stack developer, Shopify and Wix developer, SEO and web operations, code craftsman.
+          </span>
         </div>
 
         <p className="hero-desc">
