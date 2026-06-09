@@ -111,6 +111,21 @@ const Icons: Record<string, () => JSX.Element> = {
       <path d="M17.13 12.86a4.78 4.78 0 00.54-1.86c.13-.89.08-1.83-.05-2.61a5.69 5.69 0 00-3.07-4.17 5.63 5.63 0 00-5.31.02A5.69 5.69 0 006.17 8.4a7.2 7.2 0 00-.05 2.61 4.78 4.78 0 00.54 1.86C5.38 13.88 5 15.01 5 16c0 1.57.5 3 2.04 3.77V21a1 1 0 002 0v-1.5h5.92V21a1 1 0 002 0v-1.23C18.5 19 19 17.57 19 16c0-.99-.38-2.12-1.87-3.14zM12 5c2.16 0 3.67 1.3 3.67 1.3C17 7.7 17 9.37 17 10c0 .67-.1 1.24-.3 1.71-.44-.81-.91-1.57-1.37-2.15C14.3 8.31 13 7.5 12 7.5s-2.3.81-3.33 2.06c-.46.58-.93 1.34-1.37 2.15-.2-.47-.3-1.04-.3-1.71 0-.63 0-2.3 1.33-3.7C8.33 6.3 9.84 5 12 5z" />
     </svg>
   ),
+  Docker: () => (
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M4 9h3v3H4V9zm4 0h3v3H8V9zm4 0h3v3h-3V9zM8 5h3v3H8V5zm4 0h3v3h-3V5zM2 14h20a8 8 0 01-8 6H9a7 7 0 01-7-6z" />
+    </svg>
+  ),
+  Flask: () => (
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M9 2h6v2h-1v4.2l4.8 9.1A2 2 0 0117 20H7a2 2 0 01-1.8-2.9L10 8.2V4H9V2zm3 11a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" />
+    </svg>
+  ),
+  "JWT Auth": () => (
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 1a5 5 0 00-5 5v3H6a2 2 0 00-2 2v9a2 2 0 002 2h12a2 2 0 002-2v-9a2 2 0 00-2-2h-1V6a5 5 0 00-5-5zm3 8H9V6a3 3 0 016 0v3z" />
+    </svg>
+  ),
 }
 
 // Skills grouped by honest proficiency — no self-assigned scores.
@@ -135,6 +150,9 @@ const SKILLS = [
   { name: "Wix",          tier: "working" as const,  desc: "Site builder\nClient ready" },
   { name: "Git",          tier: "working" as const,  desc: "Version control\nBranch master" },
   { name: "Figma",        tier: "working" as const,  desc: "Design handoff\nUI blueprints" },
+  { name: "Docker",       tier: "working" as const,  desc: "Containerized apps\nThesis-proven" },
+  { name: "Flask",        tier: "working" as const,  desc: "Python backend\nBagaNet API" },
+  { name: "JWT Auth",     tier: "working" as const,  desc: "Token auth\nTaskflow-built" },
   { name: "Supabase",     tier: "familiar" as const, desc: "BaaS platform\nPostgres power" },
   { name: "Vercel",       tier: "familiar" as const, desc: "Deploy platform\nShip fast" },
   { name: "Liquid",       tier: "familiar" as const, desc: "Shopify templates\nTheme craft" },
@@ -176,7 +194,11 @@ export function About() {
   const [skillPage, setSkillPage] = useState(0)
   const [activeTooltip, setActiveTooltip] = useState<number | null>(null)
 
-  const PAGES = [SKILLS.slice(0, 10), SKILLS.slice(10)]
+  const PER_PAGE = 12
+  const PAGES = Array.from(
+    { length: Math.ceil(SKILLS.length / PER_PAGE) },
+    (_, p) => SKILLS.slice(p * PER_PAGE, p * PER_PAGE + PER_PAGE),
+  )
   const totalPages = PAGES.length
 
   // Skill counts per proficiency tier
@@ -263,7 +285,7 @@ export function About() {
           <div className="inv-corner-bl" aria-hidden="true" />
 
           <div className="inv-header">
-            <span className="inv-label">▶ EQUIPPED SKILLS [20/20]</span>
+            <span className="inv-label">▶ EQUIPPED SKILLS [{SKILLS.length}/{SKILLS.length}]</span>
             <span className="inv-cursor" aria-hidden="true">█</span>
           </div>
 
