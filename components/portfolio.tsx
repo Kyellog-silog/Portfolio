@@ -232,7 +232,15 @@ const SIDE_STAGES: Stage[] = [
       "Progress tracking over time",
       "Live on Vercel",
     ],
-    screenshots: ["/workout-tracker.jpg"],
+    screenshots: [
+      "/screencapture-ppl-tracker-tau-vercel-app-2026-06-10-19_12_54.png",
+      "/screencapture-ppl-tracker-tau-vercel-app-2026-06-10-19_13_27.png",
+      "/screencapture-ppl-tracker-tau-vercel-app-2026-06-10-19_13_33.png",
+      "/screencapture-ppl-tracker-tau-vercel-app-2026-06-10-19_13_38.png",
+      "/screencapture-ppl-tracker-tau-vercel-app-2026-06-10-19_13_45.png",
+    ],
+    thumb: "/screencapture-ppl-tracker-tau-vercel-app-2026-06-10-19_12_54.png",
+    fullPage: true,
   },
 ]
 
