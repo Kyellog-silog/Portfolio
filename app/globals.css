@@ -1867,6 +1867,38 @@ body::after {
   border: 1.5px solid #60a5fa;
   background: rgba(96, 165, 250, 0.1);
 }
+/* Under-construction hazard banner */
+.construction-banner {
+  position: absolute;
+  top: 50%;
+  left: -8%;
+  right: -8%;
+  transform: translateY(-50%) rotate(-5deg);
+  z-index: 3;
+  padding: 4px 0;
+  background: repeating-linear-gradient(
+    45deg,
+    var(--gold) 0px,
+    var(--gold) 12px,
+    #1a1a1a 12px,
+    #1a1a1a 24px
+  );
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+  pointer-events: none;
+}
+.construction-banner span {
+  display: block;
+  background: #1a1a1a;
+  color: var(--gold);
+  font-family: var(--font-press-start), monospace;
+  font-size: 7px;
+  text-align: center;
+  letter-spacing: 1px;
+  padding: 7px 4px;
+}
+.proj-media:has(.construction-banner) .proj-thumb {
+  filter: grayscale(40%) brightness(0.75);
+}
 .status-dot {
   width: 6px;
   height: 6px;
@@ -2029,7 +2061,7 @@ body::after {
 
 /* ── Mission Panel ─────────────────────────────────────────────────────────── */
 .mission-panel {
-  margin-top: 24px;
+  grid-column: 1 / -1; /* rendered inside .proj-grid — span the full row below the active card */
   border: 3px solid var(--gold);
   background: rgba(6, 8, 16, 0.97);
   overflow: hidden;

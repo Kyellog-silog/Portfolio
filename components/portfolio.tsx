@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { Fragment, useState, useEffect, useRef } from "react"
 import { createPortal } from "react-dom"
 import type { JSX } from "react"
 
@@ -76,6 +76,7 @@ type Stage = {
   screenshots?: string[]
   thumb?: string // card-face image override (falls back to screenshots[0])
   fullPage?: boolean
+  underConstruction?: boolean // hazard-stripe banner over the card thumbnail
 }
 
 // ── Data ─────────────────────────────────────────────────────────────────────
@@ -201,9 +202,10 @@ const SIDE_STAGES: Stage[] = [
     icon: <IconTask />,
     tag: "FULL-STACK",
     tagClass: "tag-fullstack",
-    status: "live",
-    statusLabel: "LIVE",
-    url: "https://taskflow-frontend-production-9467.up.railway.app",
+    status: "wip",
+    statusLabel: "UNDER CONSTRUCTION",
+    underConstruction: true,
+    url: "https://taskflow-frontend-bay.vercel.app",
     githubUrl: "https://github.com/Kyellog-silog/Taskflow",
     tagline: "Full-stack Kanban task manager with real-time collaboration.",
     desc: "Full-stack task management app with drag-and-drop Kanban boards, real-time updates, and team collaboration features built with React and Laravel.",
@@ -292,6 +294,29 @@ export function Portfolio() {
   const [modalFullPage, setModalFullPage] = useState(false)
   const [modalUrl, setModalUrl] = useState("")
 
+  // Track each grid's live column count so the details panel can be inserted
+  // after the active card's row (the grid uses auto-fit, so columns vary).
+  const mainGridRef = useRef<HTMLDivElement | null>(null)
+  const sideGridRef = useRef<HTMLDivElement | null>(null)
+  const [mainCols, setMainCols] = useState(3)
+  const [sideCols, setSideCols] = useState(3)
+
+  useEffect(() => {
+    const grids: Array<[HTMLDivElement | null, (n: number) => void]> = [
+      [mainGridRef.current, setMainCols],
+      [sideGridRef.current, setSideCols],
+    ]
+    const measure = () => {
+      for (const [el, setCols] of grids) {
+        if (el) setCols(getComputedStyle(el).gridTemplateColumns.split(" ").length)
+      }
+    }
+    const obs = new ResizeObserver(measure)
+    grids.forEach(([el]) => { if (el) obs.observe(el) })
+    measure()
+    return () => obs.disconnect()
+  }, [])
+
   // Scroll-reveal
   useEffect(() => {
     const obs = new IntersectionObserver(
@@ -348,13 +373,22 @@ export function Portfolio() {
 
   function renderGrid(stages: Stage[], group: "main" | "side") {
     const active = group === "main" ? activeMain : activeSide
+    const gridRef = group === "main" ? mainGridRef : sideGridRef
+    const cols = Math.max(1, group === "main" ? mainCols : sideCols)
+    // Index of the last card in the active card's row — the panel slots in
+    // after it, keeping the row intact instead of splitting it mid-row.
+    const panelAfter =
+      active === null
+        ? -1
+        : Math.min(Math.floor(active / cols) * cols + cols - 1, stages.length - 1)
     return (
-      <div className="proj-grid">
+      <div className="proj-grid" ref={gridRef}>
         {stages.map((s, i) => {
           const thumb = s.thumb ?? s.screenshots?.[0]
           const isOpen = active === i
           return (
-            <article key={s.id} className={`proj-card${isOpen ? " active" : ""}`}>
+            <Fragment key={s.id}>
+            <article className={`proj-card${isOpen ? " active" : ""}`}>
               <div className="card-corner-px tl" />
               <div className="card-corner-px tr" />
               <div className="card-corner-px bl" />
@@ -369,6 +403,11 @@ export function Portfolio() {
                   <div className="proj-media-icon">{s.icon}</div>
                 )}
                 <div className="card-scanlines" aria-hidden="true" />
+                {s.underConstruction && (
+                  <div className="construction-banner">
+                    <span>▲ UNDER CONSTRUCTION ▲</span>
+                  </div>
+                )}
                 <span className="proj-id">{s.id}</span>
                 <div className={`card-status ${s.status}`}>
                   {s.status === "live" && <span className="status-dot" aria-hidden="true" />}
@@ -410,6 +449,9 @@ export function Portfolio() {
                 </button>
               </div>
             </article>
+            {/* Details panel opens on its own row, below the active card's row */}
+            {i === panelAfter && renderPanel(group)}
+            </Fragment>
           )
         })}
       </div>
@@ -639,7 +681,6 @@ export function Portfolio() {
               <span className="ch3-label-sub">— Shipped &amp; maintained for real businesses —</span>
             </div>
             {renderGrid(MAIN_STAGES, "main")}
-            {renderPanel("main")}
           </div>
 
           {/* ── SIDE PROJECTS ── */}
@@ -649,7 +690,6 @@ export function Portfolio() {
               <span className="ch3-label-sub">— Experiments, thesis &amp; learning —</span>
             </div>
             {renderGrid(SIDE_STAGES, "side")}
-            {renderPanel("side")}
           </div>
         </div>
       </section>
