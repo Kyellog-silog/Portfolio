@@ -40,6 +40,13 @@ function IconLung() {
     </svg>
   )
 }
+function IconTruck() {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32" aria-hidden="true">
+      <path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z" />
+    </svg>
+  )
+}
 function IconBarbell() {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" width="32" height="32" aria-hidden="true">
@@ -160,6 +167,36 @@ const MAIN_STAGES: Stage[] = [
 const SIDE_STAGES: Stage[] = [
   {
     id: "STG-04",
+    label: "MILEPOST",
+    icon: <IconTruck />,
+    tag: "FULL-STACK",
+    tagClass: "tag-fullstack",
+    status: "live",
+    statusLabel: "LIVE",
+    url: "https://spotter-full-stack.vercel.app",
+    githubUrl: "https://github.com/Kyellog-silog/spotter-full-stack",
+    tagline: "HOS trip planner — mapped routes with stops plus FMCSA daily log sheets.",
+    desc: "Full-stack Hours-of-Service trip planner built for the Spotter AI assessment. From four trip inputs, a pure-Python HOS engine simulates the trip against the federal clocks (11hr driving, 14hr window, 30-min break, 70hr/8day cycle), inserting breaks, resets, and fuel stops. The frontend renders the route on a Leaflet map and draws each day's ELD log on the real DOT grid as SVG. All routing and geocoding run server-side on free APIs — no keys in the browser.",
+    client: "Spotter AI Assessment",
+    year: "2026",
+    role: "Full-Stack Dev",
+    tech: ["React", "Django + DRF", "Leaflet", "Tailwind"],
+    achievements: [
+      "HOS engine covering all four FMCSA clocks",
+      "SVG ELD log sheets, one per calendar day",
+      "12 passing tests incl. FMCSA golden fixture",
+      "Hardened prod security + resilient geocoding",
+    ],
+    screenshots: [
+      "/milepost_1.png",
+      "/milepost_2.png",
+      "/milepost_3.png",
+      "/milepost.png",
+    ],
+    fullPage: true,
+  },
+  {
+    id: "STG-05",
     label: "TASKFLOW",
     icon: <IconTask />,
     tag: "FULL-STACK",
@@ -188,7 +225,7 @@ const SIDE_STAGES: Stage[] = [
     ],
   },
   {
-    id: "STG-05",
+    id: "STG-06",
     label: "BAGANET",
     icon: <IconLung />,
     tag: "THESIS",
@@ -211,7 +248,7 @@ const SIDE_STAGES: Stage[] = [
     thumb: "/federated-learning-medical-ai-dashboard.jpg",
   },
   {
-    id: "STG-06",
+    id: "STG-07",
     label: "WORKOUT TRACKER",
     icon: <IconBarbell />,
     tag: "FITNESS APP",
